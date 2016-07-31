@@ -10,7 +10,82 @@
     tools:context="com.example.michaeljeffress.project3.MainActivity">
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/app_title"
+        android:textSize="30dp" />
+
+    <EditText
+        android:id="@+id/editText_Main_Search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/search" />
+
+    <EditText
+        android:id="@+id/editText_Main_Location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText_Main_Search"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/location" />
+
+    <LinearLayout
+        android:id="@+id/titleBlock_Main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editText_Main_Location"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:background="@color/colorPrimary"
+        android:paddingLeft="12dp">
+
+        <TextView
+            android:id="@+id/textView_Place"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/place"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/textView_Loc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:paddingRight="10dp"
+            android:text="@string/loc"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/textView_Type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:paddingRight="10dp"
+            android:text="@string/type"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/textView_Hotness2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.2"
+            android:text="@string/hotness"
+            android:textSize="15dp" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listView_Main_List"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titleBlock_Main">
+
+    </ListView>
+
 </RelativeLayout>

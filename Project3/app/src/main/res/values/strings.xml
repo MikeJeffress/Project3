@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Project3</string>
+    <string name="app_title">WHAT'S HOT</string>
+    <string name="search">SEARCH</string>
+    <string name="location">CURRENT LOCATION</string>
+    <string name="hotnesslvl">HOTNESS LEVEL</string>
+    <string name="pictures">PICTURES:</string>
+    <string name="place">Place:</string>
+    <string name="loc">Location:</string>
+    <string name="type">Type:</string>
+    <string name="hotness">Hotness:</string>
+
 </resources>
