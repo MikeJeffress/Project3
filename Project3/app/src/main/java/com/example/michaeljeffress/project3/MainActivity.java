@@ -30,16 +30,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        YelpAPIHelper helper = new YelpAPIHelper();
-//        HashMap<String,String> params = new HashMap<String, String>();
-//        params.put("latitude", );
-//        params.put("longitude", );
-//        ArrayList<String> businessNames = helper.getBuisnessesNames(params);
-//
-//        ArrayAdapter myAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, businessNames);
-//
-//        ListView myListView = (ListView) findViewById(R.id.listView_Main_List);
-//        myListView.setAdapter(myAdapter);
+        YelpAPIHelper helper = new YelpAPIHelper(MainActivity.this);
+        HashMap<String,String> params = new HashMap<String, String>();
+        ArrayList<Business> businessNames = helper.getBusinesessNearby(params);
+        ArrayList<String> businessStringNames = new ArrayList<>();
+
+        for (int i = 0; i < businessNames.size(); i++) {
+            businessStringNames.add(businessNames.get(i).name());
+        }
+
+        ArrayAdapter myAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, businessStringNames);
+
+        ListView myListView = (ListView) findViewById(R.id.listView_Main_List);
+        myListView.setAdapter(myAdapter);
 
 
     }
