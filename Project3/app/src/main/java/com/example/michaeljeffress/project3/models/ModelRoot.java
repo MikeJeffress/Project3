@@ -6,7 +6,6 @@ package com.example.michaeljeffress.project3.models;
 
 
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,40 +13,28 @@ import java.util.List;
 
 public class ModelRoot {
 
-    @SerializedName("coord")
     @Expose
     private Coord coord;
-    @SerializedName("weather")
     @Expose
     private List<Weather> weather = new ArrayList<Weather>();
-    @SerializedName("base")
     @Expose
     private String base;
-    @SerializedName("main")
     @Expose
     private Main main;
-    @SerializedName("wind")
+    @Expose
+    private Integer visibility;
     @Expose
     private Wind wind;
-    @SerializedName("rain")
-    @Expose
-    private Rain rain;
-    @SerializedName("clouds")
     @Expose
     private Clouds clouds;
-    @SerializedName("dt")
     @Expose
     private Integer dt;
-    @SerializedName("sys")
     @Expose
     private Sys sys;
-    @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("cod")
     @Expose
     private Integer cod;
 
@@ -126,6 +113,24 @@ public class ModelRoot {
     /**
      *
      * @return
+     * The visibility
+     */
+    public Integer getVisibility() {
+        return visibility;
+    }
+
+    /**
+     *
+     * @param visibility
+     * The visibility
+     */
+    public void setVisibility(Integer visibility) {
+        this.visibility = visibility;
+    }
+
+    /**
+     *
+     * @return
      * The wind
      */
     public Wind getWind() {
@@ -139,24 +144,6 @@ public class ModelRoot {
      */
     public void setWind(Wind wind) {
         this.wind = wind;
-    }
-
-    /**
-     *
-     * @return
-     * The rain
-     */
-    public Rain getRain() {
-        return rain;
-    }
-
-    /**
-     *
-     * @param rain
-     * The rain
-     */
-    public void setRain(Rain rain) {
-        this.rain = rain;
     }
 
     /**

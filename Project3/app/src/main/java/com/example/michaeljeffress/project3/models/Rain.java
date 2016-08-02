@@ -5,11 +5,9 @@ package com.example.michaeljeffress.project3.models;
  */
 
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 public class Rain {
 
-    @SerializedName("3h")
     @Expose
     private Double _3h;
 

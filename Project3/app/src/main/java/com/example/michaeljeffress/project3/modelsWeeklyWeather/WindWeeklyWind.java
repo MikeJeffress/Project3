@@ -1,15 +1,18 @@
-package com.example.michaeljeffress.project3.models;
+package com.example.michaeljeffress.project3.modelsWeeklyWeather;
 
 /**
- * Created by audreyeso on 8/1/16.
+ * Created by audreyeso on 8/2/16.
  */
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
-public class Wind {
+public class WindWeeklyWind {
 
+    @SerializedName("speed")
     @Expose
     private Double speed;
+    @SerializedName("deg")
     @Expose
     private Double deg;
 
@@ -50,4 +53,3 @@ public class Wind {
     }
 
 }
-

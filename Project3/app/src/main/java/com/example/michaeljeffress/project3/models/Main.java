@@ -10,13 +10,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class Main {
 
-    @SerializedName("temp")
     @Expose
     private Double temp;
-    @SerializedName("pressure")
     @Expose
-    private Double pressure;
-    @SerializedName("humidity")
+    private Integer pressure;
     @Expose
     private Integer humidity;
     @SerializedName("temp_min")
@@ -25,12 +22,6 @@ public class Main {
     @SerializedName("temp_max")
     @Expose
     private Double tempMax;
-    @SerializedName("sea_level")
-    @Expose
-    private Double seaLevel;
-    @SerializedName("grnd_level")
-    @Expose
-    private Double grndLevel;
 
     /**
      *
@@ -55,7 +46,7 @@ public class Main {
      * @return
      * The pressure
      */
-    public Double getPressure() {
+    public Integer getPressure() {
         return pressure;
     }
 
@@ -64,7 +55,7 @@ public class Main {
      * @param pressure
      * The pressure
      */
-    public void setPressure(Double pressure) {
+    public void setPressure(Integer pressure) {
         this.pressure = pressure;
     }
 
@@ -121,41 +112,4 @@ public class Main {
     public void setTempMax(Double tempMax) {
         this.tempMax = tempMax;
     }
-
-    /**
-     *
-     * @return
-     * The seaLevel
-     */
-    public Double getSeaLevel() {
-        return seaLevel;
-    }
-
-    /**
-     *
-     * @param seaLevel
-     * The sea_level
-     */
-    public void setSeaLevel(Double seaLevel) {
-        this.seaLevel = seaLevel;
-    }
-
-    /**
-     *
-     * @return
-     * The grndLevel
-     */
-    public Double getGrndLevel() {
-        return grndLevel;
-    }
-
-    /**
-     *
-     * @param grndLevel
-     * The grnd_level
-     */
-    public void setGrndLevel(Double grndLevel) {
-        this.grndLevel = grndLevel;
-    }
-
 }

@@ -6,23 +6,57 @@ package com.example.michaeljeffress.project3.models;
 
 
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 
 public class Sys {
-
-    @SerializedName("message")
+    @Expose
+    private Integer type;
+    @Expose
+    private Integer id;
     @Expose
     private Double message;
-    @SerializedName("country")
     @Expose
     private String country;
-    @SerializedName("sunrise")
     @Expose
     private Integer sunrise;
-    @SerializedName("sunset")
     @Expose
     private Integer sunset;
+
+    /**
+     *
+     * @return
+     * The type
+     */
+    public Integer getType() {
+        return type;
+    }
+
+    /**
+     *
+     * @param type
+     * The type
+     */
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    /**
+     *
+     * @return
+     * The id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     *
+     * @param id
+     * The id
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     /**
      *
@@ -95,5 +129,4 @@ public class Sys {
     public void setSunset(Integer sunset) {
         this.sunset = sunset;
     }
-
 }

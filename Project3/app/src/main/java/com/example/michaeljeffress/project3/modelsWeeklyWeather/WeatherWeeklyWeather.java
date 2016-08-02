@@ -1,20 +1,24 @@
-package com.example.michaeljeffress.project3.models;
+package com.example.michaeljeffress.project3.modelsWeeklyWeather;
 
 /**
- * Created by audreyeso on 8/1/16.
+ * Created by audreyeso on 8/2/16.
  */
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
+public class WeatherWeeklyWeather {
 
-public class Weather {
-
+    @SerializedName("id")
     @Expose
     private Integer id;
+    @SerializedName("main")
     @Expose
     private String main;
+    @SerializedName("description")
     @Expose
     private String description;
+    @SerializedName("icon")
     @Expose
     private String icon;
 
@@ -89,7 +93,5 @@ public class Weather {
     public void setIcon(String icon) {
         this.icon = icon;
     }
-
-
 
 }
