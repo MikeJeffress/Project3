@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class SystemWeeklyWeather {
+public class Sys_WeeklyWeather {
 
     @SerializedName("pod")
     @Expose
