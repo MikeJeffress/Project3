@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Project3</string>
     <string name="app_title">WHAT\'S HOT</string>
-    <string name="search">SEARCH</string>
+    <string name="search">SEARCH BUSINESS TYPE</string>
     <string name="location">CURRENT LOCATION</string>
     <string name="hotnesslvl">HOTNESS LEVEL</string>
     <string name="pictures">PICTURES:</string>

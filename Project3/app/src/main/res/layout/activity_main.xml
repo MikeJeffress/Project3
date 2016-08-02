@@ -20,74 +20,59 @@
 
     <EditText
         android:id="@+id/editText_Main_Search"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
+        android:hint="@string/search"
         android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:hint="@string/search" />
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:id="@+id/editText_Main_Location"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/location"
+        android:layout_below="@+id/editText_Main_Search"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText_Main_Search"
-        android:layout_centerHorizontal="true"
-        android:hint="@string/location" />
+        android:text="New Button"
+        android:id="@+id/button"
+        android:layout_above="@+id/editText_Main_Location"
+        android:layout_toEndOf="@+id/editText_Main_Search" />
 
-    <LinearLayout
-        android:id="@+id/titleBlock_Main"
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button2"
+        android:layout_alignBottom="@+id/editText_Main_Location"
+        android:layout_toEndOf="@+id/editText_Main_Location" />
+
+    <TextView
+        android:id="@+id/textView_BlueBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editText_Main_Location"
-        android:layout_centerHorizontal="true"
-        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:text=" "
+        android:textSize="15dp"
         android:background="@color/colorPrimary"
-        android:paddingLeft="12dp">
+        android:layout_below="@+id/editText_Main_Location"
+        android:layout_alignParentStart="true" />
 
-        <TextView
-            android:id="@+id/textView_Place"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/place"
-            android:textSize="15dp" />
 
-        <TextView
-            android:id="@+id/textView_Loc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.2"
-            android:paddingRight="10dp"
-            android:text="@string/loc"
-            android:textSize="15dp" />
-
-        <TextView
-            android:id="@+id/textView_Type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.2"
-            android:paddingRight="10dp"
-            android:text="@string/type"
-            android:textSize="15dp" />
-
-        <TextView
-            android:id="@+id/textView_Hotness2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.2"
-            android:text="@string/hotness"
-            android:textSize="15dp" />
-
-    </LinearLayout>
-
-    <ListView
-        android:id="@+id/listView_Main_List"
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/fragment_Map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/titleBlock_Main"
-        android:layout_above="@+id/yelpLogo">
+        android:layout_height="match_parent"
+        android:layout_below="@id/textView_BlueBar"
+        android:layout_above="@+id/yelpLogo"/>
 
-    </ListView>
 
     <ImageView
         android:id="@+id/yelpLogo"
@@ -96,6 +81,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:adjustViewBounds="true" />
+        android:adjustViewBounds="true"
+        android:paddingTop="5dp"/>
+
+
 
 </RelativeLayout>
