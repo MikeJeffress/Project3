@@ -9,5 +9,6 @@
     <string name="loc">Location:</string>
     <string name="type">Type:</string>
     <string name="hotness">Hotness:</string>
+    <string name="title_activity_open_weather">OpenWeatherActivity</string>
 
 </resources>
