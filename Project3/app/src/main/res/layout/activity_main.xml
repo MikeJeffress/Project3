@@ -77,11 +77,6 @@
             android:layout_weight="1.2"
             android:text="@string/hotness"
             android:textSize="15dp" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/openWeatherActivity_button"
-            />
 
     </LinearLayout>
 
@@ -102,5 +97,13 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:adjustViewBounds="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/openWeatherActivity_button"
+        android:layout_centerVertical="true"
+        android:text="Weather Button"
+        android:layout_alignEnd="@+id/listView_Main_List" />
 
 </RelativeLayout>

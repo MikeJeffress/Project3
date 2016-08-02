@@ -28,7 +28,7 @@ public class City {
     private Integer population;
     @SerializedName("sys")
     @Expose
-    private SysWeeklyWeather sys;
+    private SystemWeeklyWeather sys;
 
     /**
      *
@@ -125,7 +125,7 @@ public class City {
      * @return
      * The sys
      */
-    public SysWeeklyWeather getSystemWeeklyWeather() {
+    public SystemWeeklyWeather getSystemWeeklyWeather() {
         return sys;
     }
 
@@ -134,7 +134,7 @@ public class City {
      * @param sys
      * The sys
      */
-    public void setSysWeeklyWeather(SysWeeklyWeather sys) {
+    public void setSysWeeklyWeather(SystemWeeklyWeather sys) {
         this.sys = sys;
     }
 

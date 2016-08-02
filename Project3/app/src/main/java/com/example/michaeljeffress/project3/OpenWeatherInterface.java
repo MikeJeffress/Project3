@@ -21,9 +21,6 @@ public interface OpenWeatherInterface {
 
     @GET("data/2.5/forecast")
     Call<ModelRootWeeklyWeather> getWeeklyWeather(@Query("lat") double latitude,
-                                     @Query("lon") double longitude,
-                                     @Query("APPID") String appid);
-
-
+                                                  @Query("lon") double longitude,
+                                                  @Query("APPID") String appid);
 }
-

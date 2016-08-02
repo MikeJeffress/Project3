@@ -12,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.michaeljeffress.project3.models.ModelRoot;
-import com.example.michaeljeffress.project3.modelsWeeklyWeather.ModelRootWeeklyWeather;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,14 +39,14 @@ public class OpenWeatherActivity extends AppCompatActivity {
         currentTemperature = (TextView) findViewById(R.id.temperature_textView);
         weeklyWeatherTextView = (TextView) findViewById(R.id.weeklly_temperature_textView);
 
-        weeklyWeatherButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                double longitude = 37.8344510;
-                double latitude = -122.2546560;
-
-                getWeeklyWeather(longitude, latitude);
-            }
-        });
+//        weeklyWeatherButton.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View view) {
+//                double longitude = 37.8344510;
+//                double latitude = -122.2546560;
+//
+//                getWeeklyWeather(longitude, latitude);
+//            }
+//        });
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -59,43 +58,40 @@ public class OpenWeatherActivity extends AppCompatActivity {
         });
     }
 
-    protected void getWeeklyWeather(double longitude, double latitude) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(baseURL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-
-            OpenWeatherInterface openWeatherInterface = retrofit.create(OpenWeatherInterface.class);
-            Call<ModelRootWeeklyWeather> call = openWeatherInterface.getWeeklyWeather(37.8344510, -122.2546560, appid);
-
-            call.enqueue(new Callback<ModelRootWeeklyWeather>() {
-                @Override
-                public void onResponse(Call<ModelRootWeeklyWeather> call, Response<ModelRootWeeklyWeather> response) {
-                    try {
-
-                        double week = response.body().getCity().getSystemWeeklyWeather().getPopulation();
-                        String week2 = String.valueOf(week);
-                        weeklyWeatherTextView.setText(week2);
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ModelRootWeeklyWeather> call, Throwable t) {
-                    t.printStackTrace();
-                }
-            });
-        } else {
-            Toast.makeText(OpenWeatherActivity.this, "Not connected to WIFI", Toast.LENGTH_LONG).show();
-
-        }
-    }
+//    protected void getWeeklyWeather(double longitude, double latitude) {
+//        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+//        if (networkInfo != null && networkInfo.isConnected()) {
+//            Retrofit retrofit = new Retrofit.Builder()
+//                    .baseUrl(baseURL)
+//                    .addConverterFactory(GsonConverterFactory.create())
+//                    .build();
+//
+//
+//            OpenWeatherInterface openWeatherInterface = retrofit.create(OpenWeatherInterface.class);
+//            Call<ModelRootWeeklyWeather> call = openWeatherInterface.getWeeklyWeather(37.8344510, -122.2546560, appid);
+//
+//            call.enqueue(new Callback<ModelRootWeeklyWeather>() {
+//                @Override
+//                public void onResponse(Call<ModelRootWeeklyWeather> call, Response<ModelRootWeeklyWeather> response) {
+//                    try {
+//
+//
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<ModelRootWeeklyWeather> call, Throwable t) {
+//                    t.printStackTrace();
+//                }
+//            });
+//        } else {
+//            Toast.makeText(OpenWeatherActivity.this, "Not connected to WIFI", Toast.LENGTH_LONG).show();
+//
+//        }
+//    }
 
 
     protected void getCurrentWeather(double longitude, double latitude) {

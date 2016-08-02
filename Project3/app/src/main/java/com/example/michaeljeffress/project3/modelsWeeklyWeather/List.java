@@ -31,7 +31,7 @@ public class List {
     private RainWeeklyWeather rain;
     @SerializedName("sys")
     @Expose
-    private Sys_WeeklyWeather sys;
+    private SystemWeeklyWeather sys;
     @SerializedName("dt_txt")
     @Expose
     private String dtTxt;
@@ -149,7 +149,7 @@ public class List {
      * @return
      * The sys
      */
-    public Sys_WeeklyWeather getSys() {
+    public SystemWeeklyWeather getSysWEEKLYWEATHER() {
         return sys;
     }
 
@@ -158,7 +158,7 @@ public class List {
      * @param sys
      * The sys
      */
-    public void setSys(Sys_WeeklyWeather sys) {
+    public void setSystemWEEKLYWEATHER(SystemWeeklyWeather sys) {
         this.sys = sys;
     }
 
