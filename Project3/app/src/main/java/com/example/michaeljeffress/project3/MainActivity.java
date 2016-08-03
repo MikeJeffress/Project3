@@ -1,5 +1,6 @@
 package com.example.michaeljeffress.project3;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -9,9 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -45,6 +44,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private Button locationButton, typeButton;
     private EditText editText_Main_Type, editText_Main_Location;
     private GoogleMap mMap;
+    Button weatherButton;
 
     Button button;
 
@@ -54,36 +54,27 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fragment_Map);
         mapFragment.getMapAsync(this);
 
-        locationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onSearch( );
-            }
-        });
-
-
-
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION},
                     1);
-
-
         }
 
         getLocation = (Button) findViewById(R.id.locationButton);
+        weatherButton = (Button) findViewById(R.id.openWeatherActivity_button);
+        weatherButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, OpenWeatherActivity.class);
+                startActivity(intent);
+            }
+        });
         getLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,8 +83,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 HashMap<String, String> params = new HashMap<String, String>();
 
                 helper.getBusinesess(params, mLocation);
-
-
             }
         });
     }
@@ -117,21 +106,14 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-//    private void saveLocation() {
-//        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(this,
-//                    new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
-//                    REQUEST_CODE_LOCATION);
-//            return;
-//        }
-//    }
-
-//    }
-
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0.0, 0.0)).title("Marker"));
+
+//        commented this out in order to build gradle
+
+//        mMap.addMarker(new MarkerOptions().position(new LatLng(0.0, 0.0)).title("Marker"));
+
 
 
     }
@@ -142,13 +124,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION},
                     1);
@@ -176,12 +151,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public ArrayList<String> setUpBusinessNames(ArrayList<Business> businesses) {
         ArrayList<String> businessStringNames = new ArrayList<String>();
 
-        //ArrayList<String> businessStringNames2 = helper.getBusinessesNames(params,mLocation);
+
 
         for (int i = 0; i < businesses.size(); i++) {
             businessStringNames.add(businesses.get(i).name());
         }
-        Log.d("MainActivity", "BuisnessStringsNamesSize = " + businessStringNames.size());
+
 
         return businessStringNames;
     }
@@ -189,13 +164,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public void getLocation() {
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             ActivityCompat.requestPermissions(this,
                     new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION},
                     1);
@@ -236,12 +204,16 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         mLocation = location;
     }
 
+
     @Override
     public void onBuisnessesRecieved(ArrayList<Business> buisnesses) {
 
         ArrayList<String> businessStringNames = setUpBusinessNames(buisnesses);
 
-        ArrayAdapter myAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, businessStringNames);
+
+
+
+
 
 
 

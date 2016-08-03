@@ -85,19 +85,19 @@ public class WeatherJobService extends JobService {
 
     @Override
     public boolean onStartJob(JobParameters jobParameters) {
+
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
         mBuilder.setSmallIcon(R.mipmap.ic_launcher);
-        mBuilder.setContentTitle("New Weather Alert, Click Me!");
-        mBuilder.setContentText(temp);
+        mBuilder.setContentTitle("New Weather Notification");
+        mBuilder.setContentText(temp + " degrees");
         mBuilder.setContentIntent(pendingIntent);
         mBuilder.setAutoCancel(true);
         mBuilder.setPriority(Notification.PRIORITY_DEFAULT);
 
         NotificationManager mNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        // NOTIFICATION_ID allows you to update the notification later on.
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
 
         return false;

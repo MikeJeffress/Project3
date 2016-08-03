@@ -166,10 +166,9 @@ public class OpenWeatherActivity extends AppCompatActivity {
                 .build();
 
         JobScheduler jobScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
-        if (jobScheduler.schedule(jobInfo) <= 0) {
-
-        }
-
-        jobScheduler.cancel(JOB_ID);
+        jobScheduler.schedule(jobInfo);
+//        if (jobScheduler.schedule(jobInfo) <= 0) {
+//
+//        }
     }
 }

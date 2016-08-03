@@ -11,31 +11,19 @@ import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
+
 import com.yelp.clientlib.connection.YelpAPI;
 import com.yelp.clientlib.connection.YelpAPIFactory;
 import com.yelp.clientlib.entities.Business;
-import com.yelp.clientlib.entities.Coordinate;
 import com.yelp.clientlib.entities.SearchResponse;
 import com.yelp.clientlib.entities.options.CoordinateOptions;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
-import static android.view.View.Y;
-import static com.example.michaeljeffress.project3.R.id.textView;
-import static com.example.michaeljeffress.project3.R.string.location;
-import static com.google.android.gms.analytics.internal.zzy.b;
-import static com.google.android.gms.analytics.internal.zzy.t;
 
 /**
  * Created by patrickcummins on 8/1/16.

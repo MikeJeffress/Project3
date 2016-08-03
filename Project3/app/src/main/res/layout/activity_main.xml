@@ -60,42 +60,9 @@
         android:text=" "
         android:textSize="15dp"
         android:background="@color/colorPrimary"
-
         android:layout_below="@+id/editText_Main_Location"
         android:layout_alignParentStart="true" />
         android:paddingLeft="12dp">
-
-        <TextView
-            android:id="@+id/textView_Place"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/place"
-            android:textSize="15dp" />
-
-        <TextView
-            android:id="@+id/textView_Loc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.2"
-            android:paddingRight="10dp"
-            android:text="@string/loc"
-            android:textSize="15dp" />
-        <Button
-
-            android:text="Get Location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/textView_Type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.2"
-            android:paddingRight="10dp"
-            android:text="@string/type"
-            android:textSize="15dp" />
-
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -104,8 +71,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/textView_BlueBar"
-        android:layout_above="@+id/yelpLogo"/>
-
+        android:layout_above="@+id/openWeatherActivity_button" />
 
     <ImageView
         android:id="@+id/yelpLogo"
@@ -117,14 +83,20 @@
         android:adjustViewBounds="true"
         android:paddingTop="5dp"/>
 
-
-
     <Button
+        android:id="@+id/getLocation_Button"
+        android:text="Get Location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
         android:id="@+id/openWeatherActivity_button"
-        android:layout_centerVertical="true"
         android:text="Weather Button"
-         />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/textView" />
 
 </RelativeLayout>
