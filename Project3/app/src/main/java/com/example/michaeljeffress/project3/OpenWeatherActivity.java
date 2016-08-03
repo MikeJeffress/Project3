@@ -1,21 +1,21 @@
 package com.example.michaeljeffress.project3;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
+import android.annotation.TargetApi;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.michaeljeffress.project3.jobservices.WeatherJobService;
 import com.example.michaeljeffress.project3.models.ModelRoot;
 
 import retrofit2.Call;
@@ -33,12 +33,15 @@ public class OpenWeatherActivity extends AppCompatActivity {
     TextView currentTemperature;
     TextView weeklyWeatherTextView;
     String temp;
-    public static final int NOTIFICATION_ID= 1;
+
+    public static final int JOB_ID = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_weather);
+
+        setUpJobService();
 
         searchButton = (Button) findViewById(R.id.weather_button);
         weeklyWeatherButton = (Button) findViewById(R.id.weekly_weather_button);
@@ -49,7 +52,7 @@ public class OpenWeatherActivity extends AppCompatActivity {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            showWeatherNotification();
+
         }
 
 //        weeklyWeatherButton.setOnClickListener(new View.OnClickListener() {
@@ -151,21 +154,22 @@ public class OpenWeatherActivity extends AppCompatActivity {
 
     }
 
-    private void showWeatherNotification() {
-        Intent intent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-        mBuilder.setSmallIcon(R.mipmap.ic_launcher);
-        mBuilder.setContentTitle("New Weather Alert, Click Me!");
-        mBuilder.setContentText(temp);
-        mBuilder.setContentIntent(pendingIntent);
-        mBuilder.setAutoCancel(true);
-        mBuilder.setPriority(Notification.PRIORITY_DEFAULT);
 
-        NotificationManager mNotificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        // NOTIFICATION_ID allows you to update the notification later on.
-        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+    @TargetApi(21)
+    private void setUpJobService() {
 
+        JobInfo jobInfo = new JobInfo.Builder(JOB_ID,
+                new ComponentName(getPackageName(),
+                        WeatherJobService.class.getName()
+                )).setPeriodic(2000)
+                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
+                .build();
+
+        JobScheduler jobScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+        if (jobScheduler.schedule(jobInfo) <= 0) {
+
+        }
+
+        jobScheduler.cancel(JOB_ID);
     }
 }
