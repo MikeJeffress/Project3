@@ -179,6 +179,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    //will create a class to extend already existing location
+    //yelp location extends serializable
+    //android location extends parcelable
+
     @Override
     protected void onStart() {
         if (mGoogleApiClient == null) {

@@ -99,4 +99,12 @@
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@+id/textView" />
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/YELPMELOGO"
+        android:layout_alignTop="@+id/textView"
+        android:layout_toStartOf="@+id/textView"
+        android:layout_above="@+id/editText_Main_Type" />
+
 </RelativeLayout>

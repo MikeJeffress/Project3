@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.michaeljeffress.project3.jobservices.WeatherJobService;
 import com.example.michaeljeffress.project3.models.ModelRoot;
+import com.yelp.clientlib.entities.Business;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,13 +27,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class OpenWeatherActivity extends AppCompatActivity {
 
-    String baseURL = "http://api.openweathermap.org/";
-    String appid = "1e2b1107da588b3b5fa83014c6555e62";
-    Button searchButton;
-    Button weeklyWeatherButton;
-    TextView currentTemperature;
-    TextView weeklyWeatherTextView;
-    String temp;
+    private String baseURL = "http://api.openweathermap.org/";
+    private String appid = "1e2b1107da588b3b5fa83014c6555e62";
+    private Button searchButton;
+    private Button weeklyWeatherButton;
+    private TextView currentTemperature;
+    private TextView weeklyWeatherTextView;
+    private String temp;
+    private double businessLongitude;
+    private double businessLatitude;
 
     public static final int JOB_ID = 2;
 
@@ -64,11 +67,17 @@ public class OpenWeatherActivity extends AppCompatActivity {
 //            }
 //        });
 
+
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                double longitude = 37.8344510;
-                double latitude = -122.2546560;
-                getCurrentWeather(longitude, latitude);
+                Business currentBusiness = new Business();
+                businessLongitude = currentBusiness.location().coordinate().longitude();
+                businessLatitude = currentBusiness.location().coordinate().latitude();
+
+               // double longitude = 37.8344510;
+                //double latitude = -122.2546560;
+                //set longitude and latitude to new doubles
+                getCurrentWeather(businessLongitude, businessLatitude);
             }
 
         });
@@ -167,8 +176,6 @@ public class OpenWeatherActivity extends AppCompatActivity {
 
         JobScheduler jobScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
         jobScheduler.schedule(jobInfo);
-//        if (jobScheduler.schedule(jobInfo) <= 0) {
-//
-//        }
+
     }
 }
