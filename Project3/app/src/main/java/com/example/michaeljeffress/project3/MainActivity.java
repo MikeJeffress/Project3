@@ -1,5 +1,6 @@
 package com.example.michaeljeffress.project3;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -23,7 +24,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
@@ -32,6 +35,7 @@ import com.google.android.gms.maps.model.UrlTileProvider;
 import com.yelp.clientlib.entities.Business;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -44,6 +48,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     Location mLocation;
     Button getLocation;
     LocationRequest locationRequest;
+
 
     private static final int REQUEST_CODE_LOCATION = 10;
     private static final String TAG = "MainActivity";
@@ -74,7 +79,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     1);
         }
 
-        getLocation = (Button) findViewById(R.id.locationButton);
+        getLocation = (Button) findViewById(R.id.getLocation_Button);
         getLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,7 +115,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         Log.d(TAG, "onMapReady: " + mLocation.getLatitude() + mLocation.getLongitude());
-        mMap.addMarker(new MarkerOptions().position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).title("Marker"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).title("Current Location"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())));
         mMap.addTileOverlay(new TileOverlayOptions().tileProvider(createTilePovider()));
     }
@@ -142,17 +147,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    public ArrayList<String> setUpBusinessNames(ArrayList<Business> businesses) {
-        ArrayList<String> businessStringNames = new ArrayList<String>();
 
-
-        for (int i = 0; i < businesses.size(); i++) {
-            businessStringNames.add(businesses.get(i).name());
-        }
-
-
-        return businessStringNames;
-    }
 
     public void getLocation() {
 
@@ -199,9 +194,31 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     @Override
-    public void onBuisnessesRecieved(ArrayList<Business> buisnesses) {
+    public void onBuisnessesRecieved(ArrayList<Business> businesses) {
 
-        ArrayList<String> businessStringNames = setUpBusinessNames(buisnesses);
+
+        for (int i = 0; i < businesses.size(); i++) {
+            Marker currentMarker = mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(businesses.get(i).location().coordinate().latitude(), businesses.get(i).location().coordinate().longitude()))
+                    .title(businesses.get(i).name())
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+            currentMarker.setTag(businesses.get(i));
+
+
+        }
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Intent intent = new Intent(MainActivity.this, WeatherBusinessActivity.class);
+                intent.putExtra("business", (Business) marker.getTag());
+                startActivity(intent);
+            }
+        });
+
+
+
+
+
 
 
     }
