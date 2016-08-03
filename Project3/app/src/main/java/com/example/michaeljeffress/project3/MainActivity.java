@@ -25,9 +25,15 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.TileOverlay;
+import com.google.android.gms.maps.model.TileOverlayOptions;
+import com.google.android.gms.maps.model.TileProvider;
+import com.google.android.gms.maps.model.UrlTileProvider;
 import com.yelp.clientlib.entities.Business;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +53,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
 
     private SupportMapFragment mfrag;
+
+    TileOverlay tileOver;
+    private static final String omwURL = "http://tile.openweathermap.org/map/%s/%d/%d/%d.png";
 
     Button button;
 
@@ -103,6 +112,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         Log.d(TAG, "onMapReady: " + mLocation.getLatitude() + mLocation.getLongitude());
         mMap.addMarker(new MarkerOptions().position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).title("Marker"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())));
+        mMap.addTileOverlay(new TileOverlayOptions().tileProvider(createTilePovider()));
     }
 
     @Override
@@ -204,6 +214,23 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
+    }
+
+    private TileProvider createTilePovider() {
+        TileProvider tileProvider = new UrlTileProvider(256, 256) {
+            @Override
+            public URL getTileUrl(int x, int y, int zoom) {
+                String fUrl = String.format(omwURL, "clouds", zoom, x, y);
+                URL url = null;
+                try {
+                    url = new URL(fUrl);
+                } catch (MalformedURLException mfe) {
+                    mfe.printStackTrace();
+                }
+                return url;
+            }
+        };
+    return tileProvider;
     }
 }
 
