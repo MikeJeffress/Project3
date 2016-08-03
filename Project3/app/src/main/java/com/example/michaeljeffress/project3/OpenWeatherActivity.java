@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.example.michaeljeffress.project3.jobservices.WeatherJobService;
 import com.example.michaeljeffress.project3.models.ModelRoot;
-import com.yelp.clientlib.entities.Business;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -70,9 +69,9 @@ public class OpenWeatherActivity extends AppCompatActivity {
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Business currentBusiness = new Business();
-                businessLongitude = currentBusiness.location().coordinate().longitude();
-                businessLatitude = currentBusiness.location().coordinate().latitude();
+                //Business currentBusiness = new Business();
+//                businessLongitude = currentBusiness.location().coordinate().longitude();
+//                businessLatitude = currentBusiness.location().coordinate().latitude();
 
                // double longitude = 37.8344510;
                 //double latitude = -122.2546560;

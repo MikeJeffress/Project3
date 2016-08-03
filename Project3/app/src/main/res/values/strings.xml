@@ -10,5 +10,6 @@
     <string name="type">Type:</string>
     <string name="hotness">Hotness:</string>
     <string name="title_activity_open_weather">OpenWeatherActivity</string>
+    <string name="title_activity_splash">SplashActivity</string>
 
 </resources>

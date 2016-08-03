@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,11 +24,19 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.TileOverlay;
+import com.google.android.gms.maps.model.TileOverlayOptions;
+import com.google.android.gms.maps.model.TileProvider;
+import com.google.android.gms.maps.model.UrlTileProvider;
 import com.yelp.clientlib.entities.Business;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +47,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     Button getLocation;
     LocationRequest locationRequest;
 
+
     private static final int REQUEST_CODE_LOCATION = 10;
     private static final String TAG = "MainActivity";
 
@@ -46,6 +56,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     Button weatherButton;
 
+    private SupportMapFragment mfrag;
+
+    TileOverlay tileOver;
+    private static final String omwURL = "http://tile.openweathermap.org/map/%s/%d/%d/%d.png";
+
     Button button;
 
 
@@ -53,11 +68,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        mfrag = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fragment_Map);
-        mapFragment.getMapAsync(this);
 
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -66,7 +78,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     1);
         }
 
-        getLocation = (Button) findViewById(R.id.locationButton);
         weatherButton = (Button) findViewById(R.id.openWeatherActivity_button);
         weatherButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,6 +86,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 startActivity(intent);
             }
         });
+
+        getLocation = (Button) findViewById(R.id.getLocation_Button);
+
         getLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,20 +120,14 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
-//        commented this out in order to build gradle
-
-//        mMap.addMarker(new MarkerOptions().position(new LatLng(0.0, 0.0)).title("Marker"));
-
-
-
+        mMap = googleMap;
+        Log.d(TAG, "onMapReady: " + mLocation.getLatitude() + mLocation.getLongitude());
+        mMap.addMarker(new MarkerOptions().position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).title("Current Location"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())));
+        mMap.addTileOverlay(new TileOverlayOptions().tileProvider(createTilePovider()));
     }
-
-
-
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -131,9 +139,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (location == null) {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
-        }
-        else {
+        } else {
             mLocation = location;
+            mfrag.getMapAsync(this);
         }
 
     }
@@ -148,18 +156,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    public ArrayList<String> setUpBusinessNames(ArrayList<Business> businesses) {
-        ArrayList<String> businessStringNames = new ArrayList<String>();
 
-
-
-        for (int i = 0; i < businesses.size(); i++) {
-            businessStringNames.add(businesses.get(i).name());
-        }
-
-
-        return businessStringNames;
-    }
 
     public void getLocation() {
 
@@ -173,8 +170,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (location == null) {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
-        }
-        else {
+        } else {
+            Log.d(TAG, "getLocation: " + location);
             mLocation = location;
         }
     }
@@ -210,11 +207,26 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     @Override
-    public void onBuisnessesRecieved(ArrayList<Business> buisnesses) {
-
-        ArrayList<String> businessStringNames = setUpBusinessNames(buisnesses);
+    public void onBuisnessesRecieved(ArrayList<Business> businesses) {
 
 
+        for (int i = 0; i < businesses.size(); i++) {
+            Marker currentMarker = mMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(businesses.get(i).location().coordinate().latitude(), businesses.get(i).location().coordinate().longitude()))
+                    .title(businesses.get(i).name())
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+            currentMarker.setTag(businesses.get(i));
+
+
+        }
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Intent intent = new Intent(MainActivity.this, WeatherBusinessActivity.class);
+                intent.putExtra("business", (Business) marker.getTag());
+                startActivity(intent);
+            }
+        });
 
 
 
@@ -222,6 +234,23 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
+    }
+
+    private TileProvider createTilePovider() {
+        TileProvider tileProvider = new UrlTileProvider(256, 256) {
+            @Override
+            public URL getTileUrl(int x, int y, int zoom) {
+                String fUrl = String.format(omwURL, "temp", zoom, x, y);
+                URL url = null;
+                try {
+                    url = new URL(fUrl);
+                } catch (MalformedURLException mfe) {
+                    mfe.printStackTrace();
+                }
+                return url;
+            }
+        };
+        return tileProvider;
     }
 }
 

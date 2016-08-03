@@ -8,43 +8,43 @@
     tools:context="com.example.michaeljeffress.project3.OpenWeatherActivity">
 
 
-<LinearLayout
-    android:layout_width="wrap_content"
-    android:orientation="vertical"
-    android:layout_height="wrap_content">
-
-
-    <Button
-        android:id="@+id/weather_button"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="What's the Weather?" />
+        android:orientation="vertical">
 
 
-    <TextView
-        android:id="@+id/temperature_textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="50dp"
-        android:padding="10dp"/>
-
-    <Button
-        android:id="@+id/weekly_weather_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="What's the Weekly Weather?" />
+        <Button
+            android:id="@+id/weather_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="What's the Weather?" />
 
 
-    <TextView
-        android:id="@+id/weeklly_temperature_textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="50dp"
-        android:padding="10dp"/>
+        <TextView
+            android:id="@+id/temperature_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:padding="10dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="50dp" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/weekly_weather_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="What's the Weekly Weather?" />
+
+
+        <TextView
+            android:id="@+id/weeklly_temperature_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:padding="10dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="50dp" />
+
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
