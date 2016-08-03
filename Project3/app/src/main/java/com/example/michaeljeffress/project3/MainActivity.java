@@ -1,8 +1,6 @@
 package com.example.michaeljeffress.project3;
 
-import android.content.Intent;
 import android.location.Location;
-
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
@@ -10,16 +8,12 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -29,37 +23,14 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.yelp.clientlib.entities.Business;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import retrofit2.http.HEAD;
-
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.yelp.clientlib.entities.Business;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, YelpAPIHelper.OnResponseFinished {
     GoogleApiClient mGoogleApiClient;
@@ -82,16 +53,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fragment_Map);
         mapFragment.getMapAsync(this);
 
-        locationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onSearch( );
-            }
-        });
 
 
 
@@ -159,7 +125,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0.0, 0.0)).title("Marker"));
+//        commented this out in order to build gradle
+
+//        mMap.addMarker(new MarkerOptions().position(new LatLng(0.0, 0.0)).title("Marker"));
 
 
     }
@@ -204,12 +172,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public ArrayList<String> setUpBusinessNames(ArrayList<Business> businesses) {
         ArrayList<String> businessStringNames = new ArrayList<String>();
 
-        //ArrayList<String> businessStringNames2 = helper.getBusinessesNames(params,mLocation);
+
 
         for (int i = 0; i < businesses.size(); i++) {
             businessStringNames.add(businesses.get(i).name());
         }
-        Log.d("MainActivity", "BuisnessStringsNamesSize = " + businessStringNames.size());
+
 
         return businessStringNames;
     }
@@ -264,12 +232,16 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         mLocation = location;
     }
 
+
     @Override
     public void onBuisnessesRecieved(ArrayList<Business> buisnesses) {
 
         ArrayList<String> businessStringNames = setUpBusinessNames(buisnesses);
 
-        ArrayAdapter myAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, businessStringNames);
+
+
+
+
 
 
 
