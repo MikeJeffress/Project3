@@ -1,18 +1,19 @@
 package com.example.michaeljeffress.project3;
 
-import android.support.v4.app.FragmentActivity;
-
-import android.location.Location;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
-import android.support.v4.app.ActivityCompat;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.yelp.clientlib.entities.Business;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,6 +46,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private EditText editText_Main_Type, editText_Main_Location;
     private GoogleMap mMap;
 
+    private SupportMapFragment mfrag;
+
     Button button;
 
 
@@ -51,11 +55,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+        mfrag = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fragment_Map);
-        mapFragment.getMapAsync(this);
 
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -96,20 +97,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
-//        commented this out in order to build gradle
-
-//        mMap.addMarker(new MarkerOptions().position(new LatLng(0.0, 0.0)).title("Marker"));
-
-
-
+        mMap = googleMap;
+        Log.d(TAG, "onMapReady: " + mLocation.getLatitude() + mLocation.getLongitude());
+        mMap.addMarker(new MarkerOptions().position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).title("Marker"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())));
     }
-
-
-
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
@@ -124,6 +118,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
         else {
             mLocation = location;
+            mfrag.getMapAsync(this);
         }
 
     }
@@ -165,6 +160,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
         }
         else {
+            Log.d(TAG, "getLocation: " + location);
             mLocation = location;
         }
     }
