@@ -210,9 +210,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
+                if (!marker.getTitle().equals("Current Location")){
                 Intent intent = new Intent(MainActivity.this, WeatherBusinessActivity.class);
                 intent.putExtra("business", (Business) marker.getTag());
-                startActivity(intent);
+                startActivity(intent);}
             }
         });
 
