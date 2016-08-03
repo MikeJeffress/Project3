@@ -125,8 +125,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (location == null) {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
-        }
-        else {
+        } else {
             mLocation = location;
             mfrag.getMapAsync(this);
         }
@@ -145,7 +144,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     public ArrayList<String> setUpBusinessNames(ArrayList<Business> businesses) {
         ArrayList<String> businessStringNames = new ArrayList<String>();
-
 
 
         for (int i = 0; i < businesses.size(); i++) {
@@ -168,8 +166,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (location == null) {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
-        }
-        else {
+        } else {
             Log.d(TAG, "getLocation: " + location);
             mLocation = location;
         }
@@ -207,13 +204,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         ArrayList<String> businessStringNames = setUpBusinessNames(buisnesses);
 
 
-
-
-
-
-
-
-
     }
 
     private TileProvider createTilePovider() {
@@ -230,7 +220,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 return url;
             }
         };
-    return tileProvider;
+        return tileProvider;
     }
 }
 

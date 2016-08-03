@@ -10,86 +10,89 @@
     tools:context="com.example.michaeljeffress.project3.WeatherBusinessActivity">
 
     <TextView
+        android:id="@+id/degrees_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="40dp"
-        android:text="Current
-weather"
-        android:id="@+id/degrees_textView" />
+        android:text="Currentweather"
+        android:textSize="40dp" />
 
     <ImageView
-        android:layout_width="wrap_content"
         android:id="@+id/weather_image"
-        android:src="@drawable/weather"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout"
         android:layout_toEndOf="@+id/degrees_textView"
-        android:layout_above="@+id/linearLayout" />
+        android:src="@drawable/weather" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:layout_below="@id/degrees_textView"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayout">
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:text="Time of Sunrise:"
-        android:id="@+id/sunrise_textView"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
+        <TextView
+            android:id="@+id/sunrise_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="Time of Sunrise:"
+            android:textSize="30dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:text="Time of Sunset:"
-        android:id="@+id/sunset_textView"
-        android:layout_below="@+id/sunrise_textView"
-        android:layout_alignParentStart="true" />
-
+        <TextView
+            android:id="@+id/sunset_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/sunrise_textView"
+            android:text="Time of Sunset:"
+            android:textSize="30dp" />
 
 
         <TextView
+            android:id="@+id/business_name_textview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="20dp"
             android:background="@color/colorPrimary"
-            android:id="@+id/business_name_textview"/>
+            android:textSize="20dp" />
+
         <ImageView
+            android:id="@+id/business_imageView"
             android:layout_width="match_parent"
             android:layout_height="172dp"
             android:background="@color/colorPrimary"
-            android:src="@drawable/weather"
-            android:id="@+id/business_imageView"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark"
-            android:id="@+id/price_textview"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
-            android:id="@+id/hours_textview"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark"
-            android:id="@+id/location_textview"/>
-        <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
-        android:id="@+id/phone_number_textview"/>
+            android:src="@drawable/weather" />
 
         <TextView
+            android:id="@+id/price_textview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark"
-            android:id="@+id/indoor_outdoor_textview"/>
+            android:background="@color/colorPrimaryDark" />
+
+        <TextView
+            android:id="@+id/hours_textview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/location_textview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimaryDark" />
+
+        <TextView
+            android:id="@+id/phone_number_textview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/indoor_outdoor_textview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimaryDark" />
 
 
     </LinearLayout>

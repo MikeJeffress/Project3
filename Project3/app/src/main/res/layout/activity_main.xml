@@ -22,47 +22,47 @@
         android:id="@+id/editText_Main_Type"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:hint="@string/search"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/textView"
-        android:layout_alignParentStart="true" />
+        android:hint="@string/search" />
 
     <EditText
         android:id="@+id/editText_Main_Location"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:hint="@string/location"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/editText_Main_Type"
-        android:layout_alignParentStart="true" />
+        android:hint="@string/location" />
 
     <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="New Button"
         android:id="@+id/locationButton"
-        android:layout_above="@+id/editText_Main_Location"
-        android:layout_toEndOf="@+id/editText_Main_Type" />
-
-    <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
+        android:layout_above="@+id/editText_Main_Location"
+        android:layout_toEndOf="@+id/editText_Main_Type"
+        android:text="New Button" />
+
+    <Button
         android:id="@+id/typeButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/editText_Main_Location"
-        android:layout_toEndOf="@+id/editText_Main_Location" />
+        android:layout_toEndOf="@+id/editText_Main_Location"
+        android:text="New Button" />
 
     <TextView
         android:id="@+id/textView_BlueBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text=" "
-        android:textSize="15dp"
-        android:background="@color/colorPrimary"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/editText_Main_Location"
-        android:layout_alignParentStart="true" />
-        android:paddingLeft="12dp">
+        android:layout_weight="1"
+        android:background="@color/colorPrimary"
+        android:text=" "
+        android:textSize="15dp" />
+    android:paddingLeft="12dp">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -70,33 +70,33 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/textView_BlueBar"
-        android:layout_above="@+id/openWeatherActivity_button" />
+        android:layout_above="@+id/openWeatherActivity_button"
+        android:layout_below="@id/textView_BlueBar" />
 
     <ImageView
         android:id="@+id/yelpLogo"
-        android:src="@drawable/yelp_powered_btn_dark_2x"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:adjustViewBounds="true"
-        android:paddingTop="5dp"/>
+        android:paddingTop="5dp"
+        android:src="@drawable/yelp_powered_btn_dark_2x" />
 
     <Button
         android:id="@+id/getLocation_Button"
-        android:text="Get Location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:text="Get Location" />
 
     <Button
         android:id="@+id/openWeatherActivity_button"
-        android:text="Weather Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_toEndOf="@+id/textView" />
+        android:layout_toEndOf="@+id/textView"
+        android:text="Weather Button" />
 
 </RelativeLayout>
