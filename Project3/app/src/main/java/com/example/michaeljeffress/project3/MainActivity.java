@@ -115,8 +115,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         Log.d(TAG, "onMapReady: " + mLocation.getLatitude() + mLocation.getLongitude());
-        mMap.addMarker(new MarkerOptions().position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).title("Current Location"));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).title("Current Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
         mMap.addTileOverlay(new TileOverlayOptions().tileProvider(createTilePovider()));
     }
 
@@ -146,7 +147,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-
 
 
     public void getLocation() {
@@ -201,7 +201,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             Marker currentMarker = mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(businesses.get(i).location().coordinate().latitude(), businesses.get(i).location().coordinate().longitude()))
                     .title(businesses.get(i).name())
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
+                    .snippet(businesses.get(i).snippetText()));
             currentMarker.setTag(businesses.get(i));
 
 
@@ -214,11 +215,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 startActivity(intent);
             }
         });
-
-
-
-
-
 
 
     }
