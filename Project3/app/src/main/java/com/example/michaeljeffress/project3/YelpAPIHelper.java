@@ -44,10 +44,10 @@ public class YelpAPIHelper {
 
 
     public YelpAPIHelper(Context context, OnResponseFinished onResponseFinished) {
-        consumerKey = "";
-        consumerSecret = "";
-        token = "";
-        tokenSecret = "";
+        consumerKey = "M1_SfyvyDc5Ra0ULuy6D8A";
+        consumerSecret = "HS72vU6uMyXlERolPnGAY6gab3s";
+        token = "pmNtphuK3EzosXgDbU4j6CDhozciqqUR";
+        tokenSecret = "eSy2yUWHoA2fSKg0fYvpKEslMG8";
         YelpAPIFactory apiFactory = new YelpAPIFactory(consumerKey, consumerSecret, token, tokenSecret);
         yelpAPI = apiFactory.createAPI();
         this.onResponseFinished = onResponseFinished;
