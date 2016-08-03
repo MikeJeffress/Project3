@@ -1,10 +1,15 @@
 package com.example.michaeljeffress.project3;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -27,6 +32,8 @@ public class OpenWeatherActivity extends AppCompatActivity {
     Button weeklyWeatherButton;
     TextView currentTemperature;
     TextView weeklyWeatherTextView;
+    String temp;
+    public static final int NOTIFICATION_ID= 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +45,12 @@ public class OpenWeatherActivity extends AppCompatActivity {
 
         currentTemperature = (TextView) findViewById(R.id.temperature_textView);
         weeklyWeatherTextView = (TextView) findViewById(R.id.weeklly_temperature_textView);
+
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected()) {
+            showWeatherNotification();
+        }
 
 //        weeklyWeatherButton.setOnClickListener(new View.OnClickListener() {
 //            public void onClick(View view) {
@@ -118,7 +131,7 @@ public class OpenWeatherActivity extends AppCompatActivity {
                         double currentTemp = response.body().getMain().getTemp().doubleValue();
                         double fahrenheit = 1.8 * (currentTemp - 273) + 32;
                         int fahrenheitInt = ((int) fahrenheit);
-                        String temp = String.valueOf(fahrenheitInt);
+                        temp = String.valueOf(fahrenheitInt);
                         currentTemperature.setText(temp + " degrees");
 
                     } catch (Exception e) {
@@ -135,6 +148,24 @@ public class OpenWeatherActivity extends AppCompatActivity {
             Toast.makeText(OpenWeatherActivity.this, "Not connected to WIFI", Toast.LENGTH_LONG).show();
 
         }
+
+    }
+
+    private void showWeatherNotification() {
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+        mBuilder.setSmallIcon(R.mipmap.ic_launcher);
+        mBuilder.setContentTitle("New Weather Alert, Click Me!");
+        mBuilder.setContentText(temp);
+        mBuilder.setContentIntent(pendingIntent);
+        mBuilder.setAutoCancel(true);
+        mBuilder.setPriority(Notification.PRIORITY_DEFAULT);
+
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        // NOTIFICATION_ID allows you to update the notification later on.
+        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
 
     }
 }

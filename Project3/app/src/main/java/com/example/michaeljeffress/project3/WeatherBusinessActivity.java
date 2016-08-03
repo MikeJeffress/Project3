@@ -1,7 +1,7 @@
 package com.example.michaeljeffress.project3;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.yelp.clientlib.entities.Business;
 
@@ -10,10 +10,12 @@ import java.util.HashMap;
 
 public class WeatherBusinessActivity extends AppCompatActivity implements YelpAPIHelper.OnResponseFinished{
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather_business);
+
 
         YelpAPIHelper yelpAPIHelper = new YelpAPIHelper(WeatherBusinessActivity.this, WeatherBusinessActivity.this);
         HashMap<String, String> hashMapParams = new HashMap<String, String>();
@@ -30,6 +32,6 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         currentBusiness.reviews();
         currentBusiness.isClosed();
         currentBusiness.location().address();
-
     }
+
 }
