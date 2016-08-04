@@ -48,7 +48,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     GoogleApiClient mGoogleApiClient;
     Location mLocation;
     Button getLocation;
-    LocationRequest locationRequest;
+    LocationRequest locationRequest = new LocationRequest();
 
 
     private static final int REQUEST_CODE_LOCATION = 10;
@@ -69,13 +69,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     int fetchType = USE_ADDRESS_LOCATION;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setTypeButton = (Button)findViewById(R.id.setTypeButton);
+        setTypeButton = (Button) findViewById(R.id.setTypeButton);
 
         mfrag = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fragment_Map);
@@ -101,7 +100,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         //Get Address, Get LongLat
         editText_Main_Location = (EditText) findViewById(R.id.editText_Main_Location);
-        setLocationButton = (Button)findViewById(R.id.setLocationButton);
+        setLocationButton = (Button) findViewById(R.id.setLocationButton);
         setLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -144,10 +143,18 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
+        ActivityCompat.requestPermissions(this,
+                new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION},
+                1);
+
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION},
-                    1);
+
+            return;
         }
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (location == null) {
@@ -156,7 +163,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             mLocation = location;
             mfrag.getMapAsync(this);
         }
-
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -231,10 +238,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                if (!marker.getTitle().equals("Current Location")){
-                Intent intent = new Intent(MainActivity.this, WeatherBusinessActivity.class);
-                intent.putExtra("business", (Business) marker.getTag());
-                startActivity(intent);}
+                if (!marker.getTitle().equals("Current Location")) {
+                    Intent intent = new Intent(MainActivity.this, WeatherBusinessActivity.class);
+                    intent.putExtra("business", (Business) marker.getTag());
+                    startActivity(intent);
+                }
             }
         });
 
@@ -264,11 +272,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         String errorMessage = "";
 
         @Override
-        protected Address doInBackground(Void ... none) {
+        protected Address doInBackground(Void... none) {
             Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
             List<Address> addresses = null;
 
-            if(fetchType == USE_ADDRESS_NAME) {
+            if (fetchType == USE_ADDRESS_NAME) {
                 String name = editText_Main_Location.getText().toString(); //works without setting in UI thread
                 try {
                     addresses = geocoder.getFromLocationName(name, 1);
@@ -276,25 +284,23 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     errorMessage = "Service not available";
                     Log.e(TAG, errorMessage, e);
                 }
-            }
-
-            else {
+            } else {
                 errorMessage = "Unknown Type";
                 Log.e(TAG, errorMessage);
             }
 
-            if(addresses != null && addresses.size() > 0)
+            if (addresses != null && addresses.size() > 0)
                 return addresses.get(0);
 
             return null;
         }
 
         protected void onPostExecute(Address address) {
-                String addressName = "";
-                for(int i = 0; i < address.getMaxAddressLineIndex(); i++) {
-                    addressName += " --- " + address.getAddressLine(i);
-                }
-                editText_Main_Location.setText(addressName);
+            String addressName = "";
+            for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+                addressName += " --- " + address.getAddressLine(i);
+            }
+            editText_Main_Location.setText(addressName);
 
         }
     }
