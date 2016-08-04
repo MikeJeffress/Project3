@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.michaeljeffress.project3.jobservices.WeatherJobService;
 import com.example.michaeljeffress.project3.models.ModelRoot;
+import com.squareup.picasso.Picasso;
 import com.yelp.clientlib.entities.Business;
 
 import java.util.ArrayList;
@@ -35,7 +37,7 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
             mobileTextview, isClosedTextview, businessNameTextView, locationTextview;
     private ImageView yelpImageView;
     private String temp;
-
+    private static final String TAG = WeatherBusinessActivity.class.getSimpleName();
 
     public static final int JOB_ID = 2;
 
@@ -58,6 +60,7 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         businessNameTextView = (TextView) findViewById(R.id.business_name_textview);
         locationTextview = (TextView) findViewById(R.id.location_address_textview);
         yelpImageView = (ImageView) findViewById(R.id.business_imageView);
+
 
         setCurrentBusiness();
         getCurrentWeather();
@@ -188,10 +191,27 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         mobileTextview.setText("Phone number: " + mobile);
         businessNameTextView.setText(businessName);
         locationTextview.setText(location);
+        
 
-        //yelpImageView.setImageResource(image);
+        Picasso picasso = new Picasso.Builder(this).listener(new Picasso.Listener() {
 
-        //Picasso
+            @Override
+            public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
+                exception.printStackTrace();
+            }
+        }).build();
+        picasso.load(imageUrl).into(yelpImageView, new com.squareup.picasso.Callback() {
+            @Override
+            public void onSuccess() {
+                Log.d(TAG,"Success");
+            }
+
+            @Override
+            public void onError() {
+                Log.d(TAG,"No Success");
+
+            }
+        });
 
     }
 }
