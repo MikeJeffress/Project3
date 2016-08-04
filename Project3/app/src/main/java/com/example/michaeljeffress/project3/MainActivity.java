@@ -147,7 +147,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         Log.d(TAG, "onMapReady: " + mLocation.getLatitude() + mLocation.getLongitude());
         mMap.addMarker(new MarkerOptions().position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).title("Current Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), 15));
         mMap.addTileOverlay(new TileOverlayOptions().tileProvider(createTilePovider()));
         HashMap<String, String> params = new HashMap<>();
         helper.getBusinesess(params, mLocation);
@@ -199,7 +199,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         ActivityCompat.requestPermissions(this,
                 new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION},
                 1);
-        
+
     }
 
     @Override
