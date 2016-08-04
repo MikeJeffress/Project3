@@ -82,7 +82,7 @@
         android:adjustViewBounds="true"
         android:paddingTop="5dp"
         android:src="@drawable/yelp_powered_btn_dark_2x" />
-    
+
     <Button
         android:id="@+id/openWeatherActivity_button"
         android:layout_width="wrap_content"

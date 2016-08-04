@@ -221,8 +221,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             Marker currentMarker = mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(businesses.get(i).location().coordinate().latitude(), businesses.get(i).location().coordinate().longitude()))
                     .title(businesses.get(i).name())
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
-                    .snippet(businesses.get(i).snippetText()));
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE)));
             currentMarker.setTag(businesses.get(i));
 
 
