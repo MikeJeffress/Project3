@@ -22,6 +22,7 @@ import com.squareup.picasso.Picasso;
 import com.yelp.clientlib.entities.Business;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -113,17 +114,20 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
                         int sunriseTime = response.body().getSys().getSunrise();
 //                        SimpleDateFormat simpleDateFormatSunrise = new SimpleDateFormat("dd/MM/yyyy");
 //                        simpleDateFormatSunrise.format(new Date(myTimeAsLong));
-                        String sunriseString = String.valueOf(sunriseTime);
-                        long epoch = new java.text.SimpleDateFormat(sunriseString).parse("01/01/1970 01:00:00").getTime() / 1000;
-                        String epochString = String.valueOf(epoch);
-                        sunriseTextview.setText(epochString);
+
+                        long sunriseLong = ((long) sunriseTime);
+                        long sunriseTimestamp = sunriseLong * 1000L;
+                        Date date = new Date(sunriseTimestamp);
+                        String sunriseString = String.valueOf(date);
+                        sunriseTextview.setText("Time of Sunrise:" + sunriseString);
 
 
                         int sunsetTime = response.body().getSys().getSunset();
-//                        SimpleDateFormat simpleDateFormatSunset = new SimpleDateFormat("dd/MM/yyyy");
-//                        simpleDateFormatSunset.format(new Date(myTimeAsLong));
-                        String sunsetString = String.valueOf(sunsetTime);
-                        sunsetTextview.setText(sunsetString);
+                        long sunsetLong = ((long) sunsetTime);
+                        long sunsetTimestamp = sunsetLong * 1000L;
+                        Date sunsetDate = new Date(sunsetTimestamp);
+                        String sunsetString = String.valueOf(sunsetDate);
+                        sunsetTextview.setText("Time of Sunset: " + sunsetString);
 
 
                     } catch (Exception e) {
