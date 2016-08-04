@@ -112,9 +112,6 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
 
 
                         int sunriseTime = response.body().getSys().getSunrise();
-//                        SimpleDateFormat simpleDateFormatSunrise = new SimpleDateFormat("dd/MM/yyyy");
-//                        simpleDateFormatSunrise.format(new Date(myTimeAsLong));
-
                         long sunriseLong = ((long) sunriseTime);
                         long sunriseTimestamp = sunriseLong * 1000L;
                         Date date = new Date(sunriseTimestamp);
