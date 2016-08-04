@@ -11,24 +11,25 @@
 
     <TextView
         android:id="@+id/business_name_textview"
-        android:layout_alignParentTop="true"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:text ="Business Name"
         android:fontFamily="monospace"
         android:textSize="30dp" />
 
     <ImageView
         android:id="@+id/business_imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
         android:src="@drawable/weather"
         android:visibility="visible"
-        android:layout_below="@id/business_name_textview" />
+        android:layout_below="@id/business_name_textview"
+        android:layout_alignParentStart="true" />
 
     <LinearLayout
-
         android:id="@+id/linearLayout"
+        android:layout_below="@id/business_imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -66,8 +67,8 @@
 
         <TextView
             android:id="@+id/ratings_textview"
-            android:layout_width="256dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textSize="20dp"
             android:fontFamily="monospace"
             android:text ="Ratings"
@@ -75,8 +76,8 @@
 
         <TextView
             android:id="@+id/isClosed_textview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textSize="20dp"
             android:fontFamily="monospace"
             android:text ="Currently open"
@@ -84,8 +85,8 @@
 
         <TextView
             android:id="@+id/location_address_textview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textSize="20dp"
             android:fontFamily="monospace"
             android:text ="Street Add"
@@ -93,8 +94,8 @@
 
         <TextView
             android:id="@+id/location_city_textview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textSize="20dp"
             android:fontFamily="monospace"
             android:text ="City, State"
@@ -102,8 +103,8 @@
 
         <TextView
             android:id="@+id/location_state_textview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textSize="20dp"
             android:fontFamily="monospace"
             android:text ="State"
@@ -111,8 +112,8 @@
 
         <TextView
             android:id="@+id/location_zipcode_textview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textSize="20dp"
             android:fontFamily="monospace"
             android:text ="Zip code"
@@ -120,15 +121,12 @@
 
         <TextView
             android:id="@+id/mobile_textview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textSize="20dp"
             android:fontFamily="monospace"
             android:text ="Phone"
            />
-
-
-
 
     </LinearLayout>
 
