@@ -11,6 +11,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
     private String appid = "1e2b1107da588b3b5fa83014c6555e62";
     private TextView currentWeatherTextview, sunriseTextview, sunsetTextview, ratingsTextview,
             mobileTextview, isClosedTextview, businessNameTextView, locationTextview;
+    private ImageView yelpImageView;
     private String temp;
 
 
@@ -50,18 +52,17 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         currentWeatherTextview = (TextView) findViewById(R.id.degrees_textView);
         sunriseTextview = (TextView) findViewById(R.id.sunrise_textView);
         sunsetTextview = (TextView) findViewById(R.id.sunset_textView);
-        ratingsTextview =(TextView) findViewById(R.id.ratings_textview);
+        ratingsTextview = (TextView) findViewById(R.id.ratings_textview);
         mobileTextview = (TextView) findViewById(R.id.mobile_textview);
         isClosedTextview = (TextView) findViewById(R.id.isClosed_textview);
         businessNameTextView = (TextView) findViewById(R.id.business_name_textview);
         locationTextview = (TextView) findViewById(R.id.location_address_textview);
+        yelpImageView = (ImageView) findViewById(R.id.business_imageView);
 
         setCurrentBusiness();
         getCurrentWeather();
         setUpJobService();
         setTextViews();
-
-
 
 
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -103,7 +104,6 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
                         currentWeatherTextview.setText(temp + " degrees");
 
 
-
                         int sunriseTime = response.body().getSys().getSunrise();
 //                        SimpleDateFormat simpleDateFormatSunrise = new SimpleDateFormat("dd/MM/yyyy");
 //                        simpleDateFormatSunrise.format(new Date(myTimeAsLong));
@@ -115,7 +115,6 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
 //                        simpleDateFormatSunset.format(new Date(myTimeAsLong));
                         String sunsetString = String.valueOf(sunsetTime);
                         sunsetTextview.setText(sunsetString);
-
 
 
                     } catch (Exception e) {
@@ -178,6 +177,9 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         String rating = currentBusiness.rating().toString();
         String mobile = currentBusiness.displayPhone().toString();
         String businessName = currentBusiness.name();
+        String imageUrl = currentBusiness.imageUrl();
+
+        //int image = Integer.parseInt(imageUrl);
 
         //fix to take away []
         String location = currentBusiness.location().address().toString();
@@ -186,6 +188,10 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         mobileTextview.setText("Phone number: " + mobile);
         businessNameTextView.setText(businessName);
         locationTextview.setText(location);
+
+        //yelpImageView.setImageResource(image);
+
+        //Picasso
 
     }
 }
