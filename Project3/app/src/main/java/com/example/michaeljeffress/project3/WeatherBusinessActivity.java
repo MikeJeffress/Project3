@@ -107,7 +107,7 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
                         double fahrenheit = 1.8 * (currentTemp - 273) + 32;
                         int fahrenheitInt = ((int) fahrenheit);
                         temp = String.valueOf(fahrenheitInt);
-                        currentWeatherTextview.setText(temp + " degrees");
+                        currentWeatherTextview.setText("Current Temperature " + temp + (char) 0x00B0);
 
 
                         int sunriseTime = response.body().getSys().getSunrise();

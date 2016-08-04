@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text ="Business Name"
+        android:fontFamily="monospace"
         android:textSize="30dp" />
 
     <ImageView
@@ -39,7 +40,8 @@
         android:layout_below="@id/business_imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="30dp" />
+        android:fontFamily="monospace"
+        android:textSize="23dp" />
 
 
         <TextView
@@ -49,6 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
+            android:fontFamily="monospace"
             android:textSize="15dp"/>
 
         <TextView
@@ -58,6 +61,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/sunrise_textView"
+            android:fontFamily="monospace"
             android:textSize="15dp" />
 
         <TextView
@@ -65,6 +69,7 @@
             android:layout_width="256dp"
             android:layout_height="match_parent"
             android:textSize="20dp"
+            android:fontFamily="monospace"
             android:text ="Ratings"
              />
 
@@ -73,6 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="20dp"
+            android:fontFamily="monospace"
             android:text ="Currently open"
             />
 
@@ -81,6 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="20dp"
+            android:fontFamily="monospace"
             android:text ="Street Add"
              />
 
@@ -89,6 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="20dp"
+            android:fontFamily="monospace"
             android:text ="City, State"
             />
 
@@ -97,6 +105,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="20dp"
+            android:fontFamily="monospace"
             android:text ="State"
             />
 
@@ -105,6 +114,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="20dp"
+            android:fontFamily="monospace"
             android:text ="Zip code"
             />
 
@@ -113,6 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="20dp"
+            android:fontFamily="monospace"
             android:text ="Phone"
            />
 
