@@ -47,7 +47,6 @@ import java.util.Locale;
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, YelpAPIHelper.OnResponseFinished {
     GoogleApiClient mGoogleApiClient;
     Location mLocation;
-    Button getLocation;
     LocationRequest locationRequest = new LocationRequest();
 
 
@@ -59,6 +58,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
 
     private SupportMapFragment mfrag;
+    YelpAPIHelper helper = new YelpAPIHelper(MainActivity.this, MainActivity.this);
 
     TileOverlay tileOver;
     private static final String omwURL = "http://tile.openweathermap.org/map/%s/%d/%d/%d.png";
@@ -86,17 +86,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     1);
         }
 
-        getLocation = (Button) findViewById(R.id.getLocation_Button);
-        getLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getLocation();
-                YelpAPIHelper helper = new YelpAPIHelper(MainActivity.this, MainActivity.this);
-                HashMap<String, String> params = new HashMap<String, String>();
 
-                helper.getBusinesess(params, mLocation);
-            }
-        });
 
         //Get Address, Get LongLat
         editText_Main_Location = (EditText) findViewById(R.id.editText_Main_Location);
@@ -139,6 +129,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
         mMap.addTileOverlay(new TileOverlayOptions().tileProvider(createTilePovider()));
+        HashMap<String, String> params = new HashMap<>();
+        helper.getBusinesess(params, mLocation);
     }
 
     @Override
@@ -301,6 +293,15 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 addressName += " --- " + address.getAddressLine(i);
             }
             editText_Main_Location.setText(addressName);
+
+            mMap.clear();
+            mLocation.setLatitude(address.getLatitude());
+            mLocation.setLongitude(address.getLongitude());
+            mMap.addMarker(new MarkerOptions().position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).title("Current Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+            HashMap<String, String> params = new HashMap<>();
+            helper.getBusinesess(params, mLocation);
 
         }
     }

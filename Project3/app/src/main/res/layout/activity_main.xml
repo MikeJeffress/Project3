@@ -82,15 +82,7 @@
         android:adjustViewBounds="true"
         android:paddingTop="5dp"
         android:src="@drawable/yelp_powered_btn_dark_2x" />
-
-    <Button
-        android:id="@+id/getLocation_Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:text="Get Location" />
-
+    
     <Button
         android:id="@+id/openWeatherActivity_button"
         android:layout_width="wrap_content"
