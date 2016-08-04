@@ -10,87 +10,112 @@
     tools:context="com.example.michaeljeffress.project3.WeatherBusinessActivity">
 
     <TextView
-        android:id="@+id/degrees_textView"
-        android:background="@color/colorYellow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="40dp" />
+        android:id="@+id/business_name_textview"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text ="Business Name"
+        android:textSize="30dp" />
 
     <ImageView
-        android:id="@+id/weather_image"
+        android:id="@+id/business_imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/linearLayout"
-        android:layout_toEndOf="@+id/degrees_textView"
-        android:src="@drawable/weather" />
+        android:src="@drawable/weather"
+        android:visibility="visible"
+        android:layout_below="@id/business_name_textview" />
 
     <LinearLayout
+
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/degrees_textView"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+
+    <TextView
+        android:id="@+id/degrees_textView"
+        android:text ="70 degrees"
+        android:layout_below="@id/business_imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30dp" />
+
 
         <TextView
             android:id="@+id/sunrise_textView"
+            android:text="Sunrise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:textSize="30dp" />
+            android:textSize="15dp"/>
 
         <TextView
             android:id="@+id/sunset_textView"
+            android:text ="Sunset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/sunrise_textView"
-            android:textSize="30dp" />
-
-
-        <TextView
-            android:id="@+id/business_name_textview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
-            android:textSize="20dp" />
-
-        <ImageView
-            android:id="@+id/business_imageView"
-            android:layout_width="match_parent"
-            android:layout_height="172dp"
-            android:background="@color/colorPrimary"
-            android:src="@drawable/weather" />
+            android:textSize="15dp" />
 
         <TextView
             android:id="@+id/ratings_textview"
-            android:layout_width="match_parent"
+            android:layout_width="256dp"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark" />
-
-        <TextView
-            android:id="@+id/location_address_textview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark" />
-
-        <TextView
-            android:id="@+id/mobile_textview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimary" />
+            android:textSize="20dp"
+            android:text ="Ratings"
+             />
 
         <TextView
             android:id="@+id/isClosed_textview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark" />
+            android:textSize="20dp"
+            android:text ="Currently open"
+            />
 
         <TextView
-            android:id="@+id/phone_number_textview"
+            android:id="@+id/location_address_textview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorPrimary" />
+            android:textSize="20dp"
+            android:text ="Street Add"
+             />
+
+        <TextView
+            android:id="@+id/location_city_textview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="20dp"
+            android:text ="City, State"
+            />
+
+        <TextView
+            android:id="@+id/location_state_textview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="20dp"
+            android:text ="State"
+            />
+
+        <TextView
+            android:id="@+id/location_zipcode_textview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="20dp"
+            android:text ="Zip code"
+            />
+
+        <TextView
+            android:id="@+id/mobile_textview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="20dp"
+            android:text ="Phone"
+           />
+
 
 
 

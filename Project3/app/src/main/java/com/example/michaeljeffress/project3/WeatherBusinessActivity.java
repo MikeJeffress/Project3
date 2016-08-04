@@ -34,7 +34,7 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
     private String baseURL = "http://api.openweathermap.org/";
     private String appid = "1e2b1107da588b3b5fa83014c6555e62";
     private TextView currentWeatherTextview, sunriseTextview, sunsetTextview, ratingsTextview,
-            mobileTextview, isClosedTextview, businessNameTextView, locationTextview;
+            mobileTextview, isClosedTextview, businessNameTextView, locationTextview, cityTextView, zipCodeTextView,stateTextView;
     private ImageView yelpImageView;
     private String temp;
     private static final String TAG = WeatherBusinessActivity.class.getSimpleName();
@@ -53,13 +53,16 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
 
         currentWeatherTextview = (TextView) findViewById(R.id.degrees_textView);
         sunriseTextview = (TextView) findViewById(R.id.sunrise_textView);
-        sunsetTextview = (TextView) findViewById(R.id.sunset_textView);
+       sunsetTextview = (TextView) findViewById(R.id.sunset_textView);
         ratingsTextview = (TextView) findViewById(R.id.ratings_textview);
         mobileTextview = (TextView) findViewById(R.id.mobile_textview);
         isClosedTextview = (TextView) findViewById(R.id.isClosed_textview);
         businessNameTextView = (TextView) findViewById(R.id.business_name_textview);
         locationTextview = (TextView) findViewById(R.id.location_address_textview);
         yelpImageView = (ImageView) findViewById(R.id.business_imageView);
+        cityTextView = (TextView) findViewById(R.id.location_city_textview);
+        zipCodeTextView = (TextView) findViewById(R.id.location_zipcode_textview);
+        stateTextView = (TextView) findViewById(R.id.location_state_textview);
 
 
         setCurrentBusiness();
@@ -111,7 +114,10 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
 //                        SimpleDateFormat simpleDateFormatSunrise = new SimpleDateFormat("dd/MM/yyyy");
 //                        simpleDateFormatSunrise.format(new Date(myTimeAsLong));
                         String sunriseString = String.valueOf(sunriseTime);
-                        sunriseTextview.setText(sunriseString);
+                        long epoch = new java.text.SimpleDateFormat(sunriseString).parse("01/01/1970 01:00:00").getTime() / 1000;
+                        String epochString = String.valueOf(epoch);
+                        sunriseTextview.setText(epochString);
+
 
                         int sunsetTime = response.body().getSys().getSunset();
 //                        SimpleDateFormat simpleDateFormatSunset = new SimpleDateFormat("dd/MM/yyyy");
@@ -180,18 +186,22 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         String rating = currentBusiness.rating().toString();
         String mobile = currentBusiness.displayPhone().toString();
         String businessName = currentBusiness.name();
-        String imageUrl = currentBusiness.imageUrl();
-
-        //int image = Integer.parseInt(imageUrl);
+        String imageUrl = currentBusiness.imageUrl().toString();
 
         //fix to take away []
         String location = currentBusiness.location().address().toString();
+        String cityString = currentBusiness.location().city().toString();
+        String stateString = currentBusiness.location().stateCode().toString();
+        String zipCodeString = currentBusiness.location().postalCode().toString();
 
         ratingsTextview.setText("Rating: " + rating);
         mobileTextview.setText("Phone number: " + mobile);
         businessNameTextView.setText(businessName);
         locationTextview.setText(location);
-        
+        cityTextView.setText(cityString);
+        stateTextView.setText(stateString);
+       zipCodeTextView.setText(zipCodeString);
+
 
         Picasso picasso = new Picasso.Builder(this).listener(new Picasso.Listener() {
 
