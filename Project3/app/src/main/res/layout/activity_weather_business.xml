@@ -67,6 +67,7 @@
 
         <TextView
             android:id="@+id/ratings_textview"
+            android:paddingTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20dp"
@@ -101,14 +102,6 @@
             android:text ="City, State"
             />
 
-        <TextView
-            android:id="@+id/location_state_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:fontFamily="monospace"
-            android:text ="State"
-            />
 
         <TextView
             android:id="@+id/location_zipcode_textview"

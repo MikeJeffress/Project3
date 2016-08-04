@@ -35,7 +35,7 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
     private String baseURL = "http://api.openweathermap.org/";
     private String appid = "1e2b1107da588b3b5fa83014c6555e62";
     private TextView currentWeatherTextview, sunriseTextview, sunsetTextview, ratingsTextview,
-            mobileTextview, isClosedTextview, businessNameTextView, locationTextview, cityTextView, zipCodeTextView,stateTextView;
+            mobileTextview, isClosedTextview, businessNameTextView, locationTextview, cityTextView, zipCodeTextView;
     private ImageView yelpImageView;
     private String temp;
     private static final String TAG = WeatherBusinessActivity.class.getSimpleName();
@@ -63,7 +63,6 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         yelpImageView = (ImageView) findViewById(R.id.business_imageView);
         cityTextView = (TextView) findViewById(R.id.location_city_textview);
         zipCodeTextView = (TextView) findViewById(R.id.location_zipcode_textview);
-        stateTextView = (TextView) findViewById(R.id.location_state_textview);
 
 
         setCurrentBusiness();
@@ -176,11 +175,11 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         boolean isClosedOrOpen = currentBusiness.isClosed();
 
         if (isClosedOrOpen == true) {
-            String closed = "Currently closed";
+            String closed = "Currently Closed";
             isClosedTextview.setText(closed);
 
         } else if (isClosedOrOpen == false) {
-            String open = "Currently open";
+            String open = "Currently Open";
             isClosedTextview.setText(open);
         }
 
@@ -195,12 +194,11 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         String stateString = currentBusiness.location().stateCode().toString();
         String zipCodeString = currentBusiness.location().postalCode().toString();
 
-        ratingsTextview.setText("Rating: " + rating);
+        ratingsTextview.setText("Rating: " + rating + " Stars");
         mobileTextview.setText("Phone number: " + mobile);
         businessNameTextView.setText(businessName);
         locationTextview.setText(location);
-        cityTextView.setText(cityString);
-        stateTextView.setText(stateString);
+        cityTextView.setText(cityString + "," + stateString);
        zipCodeTextView.setText(zipCodeString);
 
 
