@@ -32,10 +32,7 @@ package="com.example.michaeljeffress.project3">
     </activity>
 
     <activity android:name=".MainActivity" />
-    <activity android:name=".DetailsActivity" />
 
-    <activity android:name=".OpenWeatherActivity" android:label="@string/title_activity_open_weather"
-        android:theme="@style/AppTheme.NoActionBar" />
     <activity android:name=".WeatherBusinessActivity"></activity>
 
     <service android:name=".jobservices.WeatherJobService" android:permission="android.permission.BIND_JOB_SERVICE"></service>
