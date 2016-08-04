@@ -103,13 +103,10 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
         android:src="@drawable/yelpmelogoforapp"
-=======
         android:layout_above="@+id/editText_Main_Type"
->>>>>>> master
         android:layout_alignTop="@+id/textView"
         android:layout_toStartOf="@+id/textView"
-        android:src="@drawable/yelpmelogo" />
+         />
 
 </RelativeLayout>
