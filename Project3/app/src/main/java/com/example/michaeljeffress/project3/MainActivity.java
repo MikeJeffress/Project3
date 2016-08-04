@@ -55,7 +55,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     Button setLocationButton, setTypeButton;
     private EditText editText_Main_Type, editText_Main_Location;
     private GoogleMap mMap;
-    Button weatherButton;
 
     private SupportMapFragment mfrag;
     YelpAPIHelper helper = new YelpAPIHelper(MainActivity.this, MainActivity.this);
@@ -74,11 +73,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setTypeButton = (Button) findViewById(R.id.setTypeButton);
-
-        mfrag = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.fragment_Map);
-
+        setViews();
+        setOnClicks();
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
@@ -86,11 +82,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     1);
         }
 
+    }
 
-
-        //Get Address, Get LongLat
-        editText_Main_Location = (EditText) findViewById(R.id.editText_Main_Location);
-        setLocationButton = (Button) findViewById(R.id.setLocationButton);
+    private void setOnClicks() {
         setLocationButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -100,28 +94,24 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 new GeocodeAsyncTask().execute();
             }
         });
-
     }
 
-
-    public void onSearch() {
-
-        String location = editText_Main_Location.getText().toString();
-        List<Address> addressList = null;
-        if (location != null || location.equals("")) {
-            Geocoder geocoder = new Geocoder(this);
-            try {
-                addressList = geocoder.getFromLocationName(location, 1);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Address address = addressList.get(0);
-            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(latLng).title("Marker in " + location));
-            mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-        }
+    private void setViews() {
+        setTypeButton = (Button) findViewById(R.id.setTypeButton);
+        setLocationButton = (Button) findViewById(R.id.setLocationButton);
+        editText_Main_Location = (EditText) findViewById(R.id.editText_Main_Location);
+        mfrag = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.fragment_Map);
     }
 
+    /*
+   ____                   _      __  __
+  / ___| ___   ___   __ _| | ___|  \/  | __ _ _ __
+ | |  _ / _ \ / _ \ / _` | |/ _ \ |\/| |/ _` | '_ \
+ | |_| | (_) | (_) | (_| | |  __/ |  | | (_| | |_) |
+  \____|\___/ \___/ \__, |_|\___|_|  |_|\__,_| .__/
+                    |___/                    |_|
+                    */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -133,15 +123,15 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         HashMap<String, String> params = new HashMap<>();
         helper.getBusinesess(params, mLocation);
     }
+    /*
+  ____                     _         _               ____                 _ _
+ |  _ \ ___ _ __ _ __ ___ (_)___ ___(_) ___  _ __   |  _ \ ___  ___ _   _| | |_
+ | |_) / _ \ '__| '_ ` _ \| / __/ __| |/ _ \| '_ \  | |_) / _ \/ __| | | | | __|
+ |  __/  __/ |  | | | | | | \__ \__ \ | (_) | | | | |  _ <  __/\__ \ |_| | | |_
+ |_|   \___|_|  |_| |_| |_|_|___/___/_|\___/|_| |_| |_| \_\___||___/\__,_|_|\__|
 
-    @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        ActivityCompat.requestPermissions(this,
-                new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION},
-                1);
+     */
 
-
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -159,6 +149,31 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
+
+    /*
+   ____                   _         ____                            _   _
+  / ___| ___   ___   __ _| | ___   / ___|___  _ __  _ __   ___  ___| |_(_) ___  _ __
+ | |  _ / _ \ / _ \ / _` | |/ _ \ | |   / _ \| '_ \| '_ \ / _ \/ __| __| |/ _ \| '_ \
+ | |_| | (_) | (_) | (_| | |  __/ | |__| (_) | | | | | | |  __/ (__| |_| | (_) | | | |
+  \____|\___/ \___/ \__, |_|\___|  \____\___/|_| |_|_| |_|\___|\___|\__|_|\___/|_| |_|
+                    |___/
+
+  _                    _   _               ____                  _
+ | |    ___   ___ __ _| |_(_) ___  _ __   / ___|  ___ _ ____   _(_) ___ ___  ___
+ | |   / _ \ / __/ _` | __| |/ _ \| '_ \  \___ \ / _ \ '__\ \ / / |/ __/ _ \/ __|
+ | |__| (_) | (_| (_| | |_| | (_) | | | |  ___) |  __/ |   \ V /| | (_|  __/\__ \
+ |_____\___/ \___\__,_|\__|_|\___/|_| |_| |____/ \___|_|    \_/ |_|\___\___||___/
+
+     */
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        ActivityCompat.requestPermissions(this,
+                new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION},
+                1);
+
+
+    }
+
     @Override
     public void onConnectionSuspended(int i) {
 
@@ -170,27 +185,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    public void getLocation() {
-
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION},
-                    1);
-
-
-        }
-        Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (location == null) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, locationRequest, this);
-        } else {
-            Log.d(TAG, "getLocation: " + location);
-            mLocation = location;
-        }
-    }
-
     //will create a class to extend already existing location
     //yelp location extends serializable
     //android location extends parcelable
+
 
     @Override
     protected void onStart() {
@@ -217,7 +215,14 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         mLocation = location;
     }
 
-
+    /*
+       ___         __   __   _            _          _    ____      _ _
+      / _ \ _ __   \ \ / /__| |_ __      / \   _ __ (_)  / ___|__ _| | |
+     | | | | '_ \   \ V / _ \ | '_ \    / _ \ | '_ \| | | |   / _` | | |
+     | |_| | | | |   | |  __/ | |_) |  / ___ \| |_) | | | |__| (_| | | |
+      \___/|_| |_|   |_|\___|_| .__/  /_/   \_\ .__/|_|  \____\__,_|_|_|
+                              |_|             |_|
+     */
     @Override
     public void onBuisnessesRecieved(ArrayList<Business> businesses) {
 
@@ -244,6 +249,14 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     }
+    /*
+ __        __         _   _                  ___                 _
+ \ \      / /__  __ _| |_| |__   ___ _ __   / _ \__   _____ _ __| | __ _ _   _
+  \ \ /\ / / _ \/ _` | __| '_ \ / _ \ '__| | | | \ \ / / _ \ '__| |/ _` | | | |
+   \ V  V /  __/ (_| | |_| | | |  __/ |    | |_| |\ V /  __/ |  | | (_| | |_| |
+    \_/\_/ \___|\__,_|\__|_| |_|\___|_|     \___/  \_/ \___|_|  |_|\__,_|\__, |
+                                                                         |___/
+     */
 
     private TileProvider createTilePovider() {
         TileProvider tileProvider = new UrlTileProvider(256, 256) {
@@ -262,7 +275,15 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         return tileProvider;
     }
 
-    //Translate Address into Coordinates
+
+    /*
+   ____             ____          _ _
+  / ___| ___  ___  / ___|___   __| (_)_ __   __ _
+ | |  _ / _ \/ _ \| |   / _ \ / _` | | '_ \ / _` |
+ | |_| |  __/ (_) | |__| (_) | (_| | | | | | (_| |
+  \____|\___|\___/ \____\___/ \__,_|_|_| |_|\__, |
+                                            |___/
+     */
     class GeocodeAsyncTask extends AsyncTask<Void, Void, Address> {
 
         String errorMessage = "";
@@ -310,4 +331,3 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 }
-
