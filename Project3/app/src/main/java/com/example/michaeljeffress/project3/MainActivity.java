@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -35,12 +36,12 @@ import com.google.android.gms.maps.model.UrlTileProvider;
 import com.yelp.clientlib.entities.Business;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, YelpAPIHelper.OnResponseFinished {
@@ -53,7 +54,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int REQUEST_CODE_LOCATION = 10;
     private static final String TAG = "MainActivity";
 
-    private Button locationButton, typeButton;
+    Button setLocationButton, setTypeButton;
     private EditText editText_Main_Type, editText_Main_Location;
     private GoogleMap mMap;
 
@@ -62,13 +63,20 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     TileOverlay tileOver;
     private static final String omwURL = "http://tile.openweathermap.org/map/%s/%d/%d/%d.png";
 
-    Button button;
+    //Set Location Variables
+    public static final int USE_ADDRESS_NAME = 1;
+    public static final int USE_ADDRESS_LOCATION = 2;
+    int fetchType = USE_ADDRESS_LOCATION;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        setTypeButton = (Button)findViewById(R.id.setTypeButton);
+
         mfrag = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fragment_Map);
 
@@ -90,11 +98,24 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 helper.getBusinesess(params, mLocation);
             }
         });
+
+        //Get Address, Get LongLat
+        editText_Main_Location = (EditText) findViewById(R.id.editText_Main_Location);
+        setLocationButton = (Button)findViewById(R.id.setLocationButton);
+        setLocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fetchType = USE_ADDRESS_NAME;
+                editText_Main_Location.requestFocus();
+                new GeocodeAsyncTask().execute();
+            }
+        });
+
     }
 
 
     public void onSearch() {
-        editText_Main_Location = (EditText) findViewById(R.id.editText_Main_Location);
+
         String location = editText_Main_Location.getText().toString();
         List<Address> addressList = null;
         if (location != null || location.equals("")) {
@@ -235,6 +256,47 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
         };
         return tileProvider;
+    }
+
+    //Translate Address into Coordinates
+    class GeocodeAsyncTask extends AsyncTask<Void, Void, Address> {
+
+        String errorMessage = "";
+
+        @Override
+        protected Address doInBackground(Void ... none) {
+            Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
+            List<Address> addresses = null;
+
+            if(fetchType == USE_ADDRESS_NAME) {
+                String name = editText_Main_Location.getText().toString(); //works without setting in UI thread
+                try {
+                    addresses = geocoder.getFromLocationName(name, 1);
+                } catch (IOException e) {
+                    errorMessage = "Service not available";
+                    Log.e(TAG, errorMessage, e);
+                }
+            }
+
+            else {
+                errorMessage = "Unknown Type";
+                Log.e(TAG, errorMessage);
+            }
+
+            if(addresses != null && addresses.size() > 0)
+                return addresses.get(0);
+
+            return null;
+        }
+
+        protected void onPostExecute(Address address) {
+                String addressName = "";
+                for(int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+                    addressName += " --- " + address.getAddressLine(i);
+                }
+                editText_Main_Location.setText(addressName);
+
+        }
     }
 }
 
