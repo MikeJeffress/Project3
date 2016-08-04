@@ -18,6 +18,7 @@ import com.example.michaeljeffress.project3.MainActivity;
 import com.example.michaeljeffress.project3.OpenWeatherInterface;
 import com.example.michaeljeffress.project3.R;
 import com.example.michaeljeffress.project3.models.ModelRoot;
+import com.yelp.clientlib.entities.Business;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -37,9 +38,11 @@ public class WeatherJobService extends JobService {
     String baseURL = "http://api.openweathermap.org/";
     String appid = "1e2b1107da588b3b5fa83014c6555e62";
     String temp;
+    Business currentBusiness;
+    Intent intent;
 
 
-    protected void getCurrentWeather(double longitude, double latitude) {
+    protected void getCurrentWeather() {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
@@ -49,8 +52,11 @@ public class WeatherJobService extends JobService {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
+            double businessLongitude = currentBusiness.location().coordinate().longitude();
+            double businessLatitude = currentBusiness.location().coordinate().latitude();
+
             OpenWeatherInterface openWeatherInterface = retrofit.create(OpenWeatherInterface.class);
-            Call<ModelRoot> call = openWeatherInterface.getCurrentWeather(37.8344510, -122.2546560, appid);
+            Call<ModelRoot> call = openWeatherInterface.getCurrentWeather(businessLatitude, businessLongitude, appid);
 
             call.enqueue(new Callback<ModelRoot>() {
                 @Override
@@ -64,7 +70,6 @@ public class WeatherJobService extends JobService {
                         double fahrenheit = 1.8 * (currentTemp - 273) + 32;
                         int fahrenheitInt = ((int) fahrenheit);
                         temp = String.valueOf(fahrenheitInt);
-                        //currentTemperature.setText(temp + " degrees");
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -104,6 +109,11 @@ public class WeatherJobService extends JobService {
 
         return false;
     }
+
+//    private void setCurrentBusiness() {
+//        intent = getIntent();
+//        currentBusiness = (Business) intent.getSerializableExtra("business");
+//    }
 
     @Override
     public boolean onStopJob(JobParameters jobParameters) {

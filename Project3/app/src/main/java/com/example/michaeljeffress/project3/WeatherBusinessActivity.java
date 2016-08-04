@@ -30,7 +30,8 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
 
     private String baseURL = "http://api.openweathermap.org/";
     private String appid = "1e2b1107da588b3b5fa83014c6555e62";
-    private TextView currentWeatherTextview, sunriseTextview, sunsetTextview;
+    private TextView currentWeatherTextview, sunriseTextview, sunsetTextview, ratingsTextview,
+            mobileTextview, isClosedTextview, businessNameTextView, locationTextview;
     private String temp;
 
 
@@ -48,11 +49,17 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
 
         currentWeatherTextview = (TextView) findViewById(R.id.degrees_textView);
         sunriseTextview = (TextView) findViewById(R.id.sunrise_textView);
-        sunriseTextview = (TextView) findViewById(R.id.sunset_textView);
+        sunsetTextview = (TextView) findViewById(R.id.sunset_textView);
+        ratingsTextview =(TextView) findViewById(R.id.ratings_textview);
+        mobileTextview = (TextView) findViewById(R.id.mobile_textview);
+        isClosedTextview = (TextView) findViewById(R.id.isClosed_textview);
+        businessNameTextView = (TextView) findViewById(R.id.business_name_textview);
+        locationTextview = (TextView) findViewById(R.id.location_address_textview);
 
         setCurrentBusiness();
         setUpJobService();
         getCurrentWeather();
+        setTextViews();
 
 
 
@@ -144,6 +151,32 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
 
     @Override
     public void onBuisnessesRecieved(ArrayList<Business> buisnesses) {
+
+    }
+
+    private void setTextViews() {
+        boolean isClosedOrOpen = currentBusiness.isClosed();
+
+        if (isClosedOrOpen == true) {
+            String closed = "Currently closed";
+            isClosedTextview.setText(closed);
+
+        } else if (isClosedOrOpen == false) {
+            String open = "Currently open";
+            isClosedTextview.setText(open);
+        }
+
+        String rating = currentBusiness.rating().toString();
+        String mobile = currentBusiness.displayPhone().toString();
+        String businessName = currentBusiness.name();
+
+        //fix to take away []
+        String location = currentBusiness.location().address().toString();
+
+        ratingsTextview.setText("Rating: " + rating);
+        mobileTextview.setText("Phone number: " + mobile);
+        businessNameTextView.setText(businessName);
+        locationTextview.setText(location);
 
     }
 }

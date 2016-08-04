@@ -11,6 +11,7 @@
 
     <TextView
         android:id="@+id/degrees_textView"
+        android:background="@color/colorYellow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="40dp" />
@@ -62,19 +63,25 @@
             android:src="@drawable/weather" />
 
         <TextView
-            android:id="@+id/price_textview"
+            android:id="@+id/ratings_textview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorPrimaryDark" />
 
         <TextView
-            android:id="@+id/hours_textview"
+            android:id="@+id/location_address_textview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimaryDark" />
+
+        <TextView
+            android:id="@+id/mobile_textview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorPrimary" />
 
         <TextView
-            android:id="@+id/location_textview"
+            android:id="@+id/isClosed_textview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/colorPrimaryDark" />
@@ -85,11 +92,6 @@
             android:layout_height="match_parent"
             android:background="@color/colorPrimary" />
 
-        <TextView
-            android:id="@+id/indoor_outdoor_textview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark" />
 
 
     </LinearLayout>
