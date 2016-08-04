@@ -54,7 +54,7 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
 
         currentWeatherTextview = (TextView) findViewById(R.id.degrees_textView);
         sunriseTextview = (TextView) findViewById(R.id.sunrise_textView);
-       sunsetTextview = (TextView) findViewById(R.id.sunset_textView);
+        sunsetTextview = (TextView) findViewById(R.id.sunset_textView);
         ratingsTextview = (TextView) findViewById(R.id.ratings_textview);
         mobileTextview = (TextView) findViewById(R.id.mobile_textview);
         isClosedTextview = (TextView) findViewById(R.id.isClosed_textview);
@@ -187,9 +187,9 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         String mobile = currentBusiness.displayPhone().toString();
         String businessName = currentBusiness.name();
         String imageUrl = currentBusiness.imageUrl().toString();
+        String loc = currentBusiness.location().address().toString();
+        String location = loc.substring(1, loc.length() - 1);
 
-        //fix to take away []
-        String location = currentBusiness.location().address().toString();
         String cityString = currentBusiness.location().city().toString();
         String stateString = currentBusiness.location().stateCode().toString();
         String zipCodeString = currentBusiness.location().postalCode().toString();
@@ -199,7 +199,7 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         businessNameTextView.setText(businessName);
         locationTextview.setText(location);
         cityTextView.setText(cityString + "," + stateString);
-       zipCodeTextView.setText(zipCodeString);
+        zipCodeTextView.setText(zipCodeString);
 
 
         Picasso picasso = new Picasso.Builder(this).listener(new Picasso.Listener() {
@@ -212,12 +212,12 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         picasso.load(imageUrl).into(yelpImageView, new com.squareup.picasso.Callback() {
             @Override
             public void onSuccess() {
-                Log.d(TAG,"Success");
+                Log.d(TAG, "Success");
             }
 
             @Override
             public void onError() {
-                Log.d(TAG,"No Success");
+                Log.d(TAG, "No Success");
 
             }
         });
