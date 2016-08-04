@@ -11,6 +11,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -43,20 +45,26 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, YelpAPIHelper.OnResponseFinished {
+public class MainActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, YelpAPIHelper.OnResponseFinished, RecyclerViewAdapter.OnRecyclerViewItemClickListener {
     GoogleApiClient mGoogleApiClient;
     Location mLocation;
     LocationRequest locationRequest = new LocationRequest();
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter rvAdapter;
+    private RecyclerView.LayoutManager rvLayoutManager;
+    private boolean mapVisible;
 
 
     private static final int REQUEST_CODE_LOCATION = 10;
     private static final String TAG = "MainActivity";
 
-    Button setLocationButton, setTypeButton;
+    Button setLocationButton, setTypeButton, listSwitch;
     private EditText editText_Main_Type, editText_Main_Location;
     private GoogleMap mMap;
 
     private SupportMapFragment mfrag;
+    View mapFragment;
     YelpAPIHelper helper = new YelpAPIHelper(MainActivity.this, MainActivity.this);
 
     TileOverlay tileOver;
@@ -75,6 +83,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         setViews();
         setOnClicks();
+        mapVisible = true;
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
@@ -94,14 +103,32 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 new GeocodeAsyncTask().execute();
             }
         });
+        setTypeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setBusinessType();
+            }
+        });
+        listSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listSwitch();
+            }
+        });
     }
+
 
     private void setViews() {
         setTypeButton = (Button) findViewById(R.id.setTypeButton);
         setLocationButton = (Button) findViewById(R.id.setLocationButton);
         editText_Main_Location = (EditText) findViewById(R.id.editText_Main_Location);
+        editText_Main_Type = (EditText) findViewById(R.id.editText_Main_Type);
         mfrag = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fragment_Map);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mapFragment = findViewById(R.id.fragment_Map);
+        listSwitch = (Button) findViewById(R.id.recylerViewButton);
+
     }
 
     /*
@@ -118,7 +145,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         Log.d(TAG, "onMapReady: " + mLocation.getLatitude() + mLocation.getLongitude());
         mMap.addMarker(new MarkerOptions().position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).title("Current Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), 15));
         mMap.addTileOverlay(new TileOverlayOptions().tileProvider(createTilePovider()));
         HashMap<String, String> params = new HashMap<>();
         helper.getBusinesess(params, mLocation);
@@ -171,7 +198,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION},
                 1);
 
-
     }
 
     @Override
@@ -183,12 +209,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-
-
-    //will create a class to extend already existing location
-    //yelp location extends serializable
-    //android location extends parcelable
-
 
     @Override
     protected void onStart() {
@@ -239,6 +259,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         }
+        rvLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(rvLayoutManager);
+        rvAdapter = new RecyclerViewAdapter(businesses, this);
+        recyclerView.setAdapter(rvAdapter);
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
@@ -315,22 +339,78 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             return null;
         }
 
+
         protected void onPostExecute(Address address) {
             String addressName = "";
-            for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
-                addressName += " --- " + address.getAddressLine(i);
-            }
-            editText_Main_Location.setText(addressName);
+            if (address == null) {
+                editText_Main_Location.setError("Invalid Address");
+            } else {
+                for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+                    addressName += " --- " + address.getAddressLine(i);
+                }
+                editText_Main_Location.setText(addressName);
 
-            mMap.clear();
-            mLocation.setLatitude(address.getLatitude());
-            mLocation.setLongitude(address.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).title("Current Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
-            HashMap<String, String> params = new HashMap<>();
-            helper.getBusinesess(params, mLocation);
+                mMap.clear();
+                mLocation.setLatitude(address.getLatitude());
+                mLocation.setLongitude(address.getLongitude());
+                mMap.addMarker(new MarkerOptions().position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).title("Current Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())));
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+                HashMap<String, String> params = new HashMap<>();
+                helper.getBusinesess(params, mLocation);
+            }
 
         }
     }
+
+    /*
+____                      _       ____            _                       _____
+/ ___|  ___  __ _ _ __ ___| |__   | __ ) _   _ ___(_)_ __   ___  ___ ___  |_   _|   _ _ __   ___
+\___ \ / _ \/ _` | '__/ __| '_ \  |  _ \| | | / __| | '_ \ / _ \/ __/ __|   | || | | | '_ \ / _ \
+___) |  __/ (_| | | | (__| | | | | |_) | |_| \__ \ | | | |  __/\__ \__ \   | || |_| | |_) |  __/
+|____/ \___|\__,_|_|  \___|_| |_| |____/ \__,_|___/_|_| |_|\___||___/___/   |_| \__, | .__/ \___|
+                                                                         |___/|_|
+ */
+    private void setBusinessType() {
+        mMap.clear();
+        mMap.addMarker(new MarkerOptions().position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).title("Current Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        HashMap<String, String> params = new HashMap<>();
+        if (editText_Main_Type.getText().toString().equals("")) {
+            editText_Main_Type.setError("Enter Something");
+        } else {
+            params.put("term", editText_Main_Type.getText().toString());
+            helper.getBusinesess(params, mLocation);
+        }
+
+    }
+
+    /*
+  ____                      _            __     ___
+ |  _ \ ___  ___ _   _  ___| | ___ _ __  \ \   / (_) _____      __
+ | |_) / _ \/ __| | | |/ __| |/ _ \ '__|  \ \ / /| |/ _ \ \ /\ / /
+ |  _ <  __/ (__| |_| | (__| |  __/ |      \ V / | |  __/\ V  V /
+ |_| \_\___|\___|\__, |\___|_|\___|_|       \_/  |_|\___| \_/\_/
+                 |___/
+     */
+    private void listSwitch() {
+        if (mapVisible) {
+            mapFragment.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            mapVisible = false;
+        } else {
+            recyclerView.setVisibility(View.GONE);
+            mapFragment.setVisibility(View.VISIBLE);
+            mapVisible = true;
+        }
+    }
+
+    @Override
+    public void onItemClick(Business currentBusiness) {
+        Intent intent = new Intent(MainActivity.this, WeatherBusinessActivity.class);
+        intent.putExtra("business", currentBusiness);
+        startActivity(intent);
+
+
+    }
+
 }
