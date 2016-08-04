@@ -10,7 +10,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -40,23 +43,31 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-public class MainActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, YelpAPIHelper.OnResponseFinished {
+public class MainActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener, YelpAPIHelper.OnResponseFinished, RecyclerViewAdapter.OnRecyclerViewItemClickListener {
     GoogleApiClient mGoogleApiClient;
     Location mLocation;
     LocationRequest locationRequest = new LocationRequest();
+
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter rvAdapter;
+    private RecyclerView.LayoutManager rvLayoutManager;
+    private boolean mapVisible;
+
 
 
     private static final int REQUEST_CODE_LOCATION = 10;
     private static final String TAG = "MainActivity";
 
-    Button setLocationButton, setTypeButton;
+    Button setLocationButton, setTypeButton, listSwitch;
     private EditText editText_Main_Type, editText_Main_Location;
     private GoogleMap mMap;
 
     private SupportMapFragment mfrag;
+    View mapFragment;
     YelpAPIHelper helper = new YelpAPIHelper(MainActivity.this, MainActivity.this);
 
     TileOverlay tileOver;
@@ -75,6 +86,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         setViews();
         setOnClicks();
+        mapVisible = true;
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
@@ -100,7 +112,15 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 setBusinessType();
             }
         });
+        listSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listSwitch();
+            }
+        });
     }
+
+
 
 
     private void setViews() {
@@ -110,6 +130,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         editText_Main_Type = (EditText) findViewById(R.id.editText_Main_Type);
         mfrag = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fragment_Map);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mapFragment = findViewById(R.id.fragment_Map);
+        listSwitch = (Button) findViewById(R.id.recylerViewButton);
+
     }
 
     /*
@@ -235,6 +259,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public void onBuisnessesRecieved(ArrayList<Business> businesses) {
 
 
+
         for (int i = 0; i < businesses.size(); i++) {
             Marker currentMarker = mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(businesses.get(i).location().coordinate().latitude(), businesses.get(i).location().coordinate().longitude()))
@@ -244,6 +269,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         }
+        rvLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(rvLayoutManager);
+        rvAdapter = new RecyclerViewAdapter(businesses, this);
+        recyclerView.setAdapter(rvAdapter);
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
@@ -360,5 +389,27 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
 
+    /*
+
+     */
+    private void listSwitch() {
+        if (mapVisible){
+            mapFragment.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+            mapVisible=false;
+        }else {
+            recyclerView.setVisibility(View.GONE);
+            mapFragment.setVisibility(View.VISIBLE);
+            mapVisible = true;
+        }
+    }
+    @Override
+    public void onItemClick(Business currentBusiness) {
+        Intent intent = new Intent(MainActivity.this, WeatherBusinessActivity.class);
+        intent.putExtra("business", currentBusiness);
+        startActivity(intent);
+
+
+    }
 
 }
