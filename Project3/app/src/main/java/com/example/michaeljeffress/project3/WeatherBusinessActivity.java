@@ -10,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
@@ -146,11 +147,14 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
 
     @TargetApi(21)
     private void setUpJobService() {
+        PersistableBundle bundle = new PersistableBundle();
+        bundle.putDouble("latitude", currentBusiness.location().coordinate().latitude());
+        bundle.putDouble("longitude", currentBusiness.location().coordinate().latitude());
 
         JobInfo jobInfo = new JobInfo.Builder(JOB_ID,
                 new ComponentName(getPackageName(),
                         WeatherJobService.class.getName()
-                )).setPeriodic(2000)
+                )).setPeriodic(3600000).setExtras(bundle)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)
                 .build();
 
