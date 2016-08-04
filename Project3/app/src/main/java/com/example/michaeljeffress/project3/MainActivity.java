@@ -56,6 +56,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private RecyclerView.Adapter rvAdapter;
     private RecyclerView.LayoutManager rvLayoutManager;
     private boolean mapVisible;
+    private boolean currentLocationShowing = false;
 
 
     private static final int REQUEST_CODE_LOCATION = 10;
@@ -145,7 +146,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         Log.d(TAG, "onMapReady: " + mLocation.getLatitude() + mLocation.getLongitude());
-        mMap.addMarker(new MarkerOptions().position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).title("Current Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        if (!currentLocationShowing) {
+            mMap.addMarker(new MarkerOptions().position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).title("Current Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+            currentLocationShowing = true;
+        }
         mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLocation.getLatitude(), mLocation.getLongitude()), 15));
         mMap.addTileOverlay(new TileOverlayOptions().tileProvider(createTilePovider()));
@@ -363,12 +367,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     /*
-____                      _       ____            _                       _____
+ ____                      _       ____            _                       _____
 / ___|  ___  __ _ _ __ ___| |__   | __ ) _   _ ___(_)_ __   ___  ___ ___  |_   _|   _ _ __   ___
 \___ \ / _ \/ _` | '__/ __| '_ \  |  _ \| | | / __| | '_ \ / _ \/ __/ __|   | || | | | '_ \ / _ \
-___) |  __/ (_| | | | (__| | | | | |_) | |_| \__ \ | | | |  __/\__ \__ \   | || |_| | |_) |  __/
+ ___) |  __/ (_| | | | (__| | | | | |_) | |_| \__ \ | | | |  __/\__ \__ \   | || |_| | |_) |  __/
 |____/ \___|\__,_|_|  \___|_| |_| |____/ \__,_|___/_|_| |_|\___||___/___/   |_| \__, | .__/ \___|
-                                                                         |___/|_|
+                                                                                |___/|_|
  */
     private void setBusinessType() {
         mMap.clear();
@@ -408,7 +412,6 @@ ___) |  __/ (_| | | | (__| | | | | |_) | |_| \__ \ | | | |  __/\__ \__ \   | || 
         Intent intent = new Intent(MainActivity.this, WeatherBusinessActivity.class);
         intent.putExtra("business", currentBusiness);
         startActivity(intent);
-
 
     }
 
