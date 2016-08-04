@@ -115,7 +115,7 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
                         long sunriseTimestamp = sunriseLong * 1000L;
                         Date date = new Date(sunriseTimestamp);
                         String sunriseString = String.valueOf(date);
-                        sunriseTextview.setText("Time of Sunrise:" + sunriseString);
+                        sunriseTextview.setText("Sunrise:" + sunriseString);
 
 
                         int sunsetTime = response.body().getSys().getSunset();
@@ -123,7 +123,7 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
                         long sunsetTimestamp = sunsetLong * 1000L;
                         Date sunsetDate = new Date(sunsetTimestamp);
                         String sunsetString = String.valueOf(sunsetDate);
-                        sunsetTextview.setText("Time of Sunset: " + sunsetString);
+                        sunsetTextview.setText("Sunset: " + sunsetString);
 
 
                     } catch (Exception e) {

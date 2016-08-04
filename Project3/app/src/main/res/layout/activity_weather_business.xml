@@ -44,16 +44,42 @@
         android:fontFamily="monospace"
         android:textSize="23dp" />
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:id="@+id/sunrise_image"
+            android:src="@mipmap/sunrise"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/sunrise_textView"
             android:text="Sunrise"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="9dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:fontFamily="monospace"
             android:textSize="11dp"/>
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+    <ImageView
+            android:layout_width="wrap_content"
+            android:id="@+id/sunset_image"
+            android:src="@mipmap/sunset"
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/sunset_textView"
@@ -61,9 +87,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:paddingTop="9dp"
             android:layout_below="@+id/sunrise_textView"
             android:fontFamily="monospace"
             android:textSize="11dp" />
+
+    </LinearLayout>
 
         <TextView
             android:id="@+id/ratings_textview"
