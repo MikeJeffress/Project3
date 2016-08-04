@@ -39,6 +39,9 @@ package="com.example.michaeljeffress.project3">
     <activity android:name=".WeatherBusinessActivity"></activity>
 
     <service android:name=".jobservices.WeatherJobService" android:permission="android.permission.BIND_JOB_SERVICE"></service>
+    <service
+        android:name=".GeocodeAddressIntentService"
+        android:exported="false"/>
 
 </application>
 
