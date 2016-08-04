@@ -94,12 +94,20 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 new GeocodeAsyncTask().execute();
             }
         });
+        setTypeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setBusinessType();
+            }
+        });
     }
+
 
     private void setViews() {
         setTypeButton = (Button) findViewById(R.id.setTypeButton);
         setLocationButton = (Button) findViewById(R.id.setLocationButton);
         editText_Main_Location = (EditText) findViewById(R.id.editText_Main_Location);
+        editText_Main_Type = (EditText) findViewById(R.id.editText_Main_Type);
         mfrag = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.fragment_Map);
     }
@@ -312,6 +320,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             return null;
         }
 
+
         protected void onPostExecute(Address address) {
             String addressName = "";
             for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
@@ -330,4 +339,26 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
     }
+            /*
+  ____                      _       ____            _                       _____
+ / ___|  ___  __ _ _ __ ___| |__   | __ ) _   _ ___(_)_ __   ___  ___ ___  |_   _|   _ _ __   ___
+ \___ \ / _ \/ _` | '__/ __| '_ \  |  _ \| | | / __| | '_ \ / _ \/ __/ __|   | || | | | '_ \ / _ \
+  ___) |  __/ (_| | | | (__| | | | | |_) | |_| \__ \ | | | |  __/\__ \__ \   | || |_| | |_) |  __/
+ |____/ \___|\__,_|_|  \___|_| |_| |____/ \__,_|___/_|_| |_|\___||___/___/   |_| \__, | .__/ \___|
+                                                                                 |___/|_|
+         */
+            private void setBusinessType() {
+                mMap.clear();
+                mMap.addMarker(new MarkerOptions().position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).title("Current Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                HashMap<String, String> params = new HashMap<>();
+                if (editText_Main_Type.getText().toString().equals("")){
+                    editText_Main_Type.setError("Enter Something");
+                }else {
+                    params.put("term", editText_Main_Type.getText().toString());
+                    helper.getBusinesess(params, mLocation);
+                }
+
+            }
+
+
 }
