@@ -93,6 +93,8 @@ public class WeatherJobService extends JobService {
     @Override
     public boolean onStartJob(JobParameters jobParameters) {
 
+        //getCurrentWeather();
+
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);

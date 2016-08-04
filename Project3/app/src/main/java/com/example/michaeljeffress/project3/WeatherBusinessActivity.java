@@ -57,9 +57,10 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         locationTextview = (TextView) findViewById(R.id.location_address_textview);
 
         setCurrentBusiness();
-        setUpJobService();
         getCurrentWeather();
+        setUpJobService();
         setTextViews();
+
 
 
 
@@ -101,13 +102,21 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
                         temp = String.valueOf(fahrenheitInt);
                         currentWeatherTextview.setText(temp + " degrees");
 
+
+
                         int sunriseTime = response.body().getSys().getSunrise();
+//                        SimpleDateFormat simpleDateFormatSunrise = new SimpleDateFormat("dd/MM/yyyy");
+//                        simpleDateFormatSunrise.format(new Date(myTimeAsLong));
                         String sunriseString = String.valueOf(sunriseTime);
                         sunriseTextview.setText(sunriseString);
 
                         int sunsetTime = response.body().getSys().getSunset();
+//                        SimpleDateFormat simpleDateFormatSunset = new SimpleDateFormat("dd/MM/yyyy");
+//                        simpleDateFormatSunset.format(new Date(myTimeAsLong));
                         String sunsetString = String.valueOf(sunsetTime);
                         sunsetTextview.setText(sunsetString);
+
+
 
                     } catch (Exception e) {
                         e.printStackTrace();
