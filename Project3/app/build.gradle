@@ -12,7 +12,7 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
-
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -39,5 +39,6 @@ dependencies {
     compile 'com.yelp.clientlib:yelp-android:2.0.0'
     compile 'com.google.android.gms:play-services-location:9.4.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
-
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
+    androidTestCompile 'com.android.support:support-annotations:24.1.1'
 }
