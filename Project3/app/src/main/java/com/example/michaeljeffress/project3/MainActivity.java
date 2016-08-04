@@ -58,7 +58,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private boolean mapVisible;
 
 
-
     private static final int REQUEST_CODE_LOCATION = 10;
     private static final String TAG = "MainActivity";
 
@@ -119,8 +118,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
     }
-
-
 
 
     private void setViews() {
@@ -202,8 +199,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         ActivityCompat.requestPermissions(this,
                 new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION},
                 1);
-
-
+        
     }
 
     @Override
@@ -215,12 +211,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-
-
-    //will create a class to extend already existing location
-    //yelp location extends serializable
-    //android location extends parcelable
-
 
     @Override
     protected void onStart() {
@@ -257,7 +247,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onBuisnessesRecieved(ArrayList<Business> businesses) {
-
 
 
         for (int i = 0; i < businesses.size(); i++) {
@@ -352,9 +341,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         protected void onPostExecute(Address address) {
             String addressName = "";
-            if (address == null){
+            if (address == null) {
                 editText_Main_Location.setError("Invalid Address");
-            }else {
+            } else {
                 for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
                     addressName += " --- " + address.getAddressLine(i);
                 }
@@ -372,26 +361,27 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
     }
-            /*
-  ____                      _       ____            _                       _____
- / ___|  ___  __ _ _ __ ___| |__   | __ ) _   _ ___(_)_ __   ___  ___ ___  |_   _|   _ _ __   ___
- \___ \ / _ \/ _` | '__/ __| '_ \  |  _ \| | | / __| | '_ \ / _ \/ __/ __|   | || | | | '_ \ / _ \
-  ___) |  __/ (_| | | | (__| | | | | |_) | |_| \__ \ | | | |  __/\__ \__ \   | || |_| | |_) |  __/
- |____/ \___|\__,_|_|  \___|_| |_| |____/ \__,_|___/_|_| |_|\___||___/___/   |_| \__, | .__/ \___|
-                                                                                 |___/|_|
-         */
-            private void setBusinessType() {
-                mMap.clear();
-                mMap.addMarker(new MarkerOptions().position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).title("Current Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-                HashMap<String, String> params = new HashMap<>();
-                if (editText_Main_Type.getText().toString().equals("")){
-                    editText_Main_Type.setError("Enter Something");
-                }else {
-                    params.put("term", editText_Main_Type.getText().toString());
-                    helper.getBusinesess(params, mLocation);
-                }
 
-            }
+    /*
+____                      _       ____            _                       _____
+/ ___|  ___  __ _ _ __ ___| |__   | __ ) _   _ ___(_)_ __   ___  ___ ___  |_   _|   _ _ __   ___
+\___ \ / _ \/ _` | '__/ __| '_ \  |  _ \| | | / __| | '_ \ / _ \/ __/ __|   | || | | | '_ \ / _ \
+___) |  __/ (_| | | | (__| | | | | |_) | |_| \__ \ | | | |  __/\__ \__ \   | || |_| | |_) |  __/
+|____/ \___|\__,_|_|  \___|_| |_| |____/ \__,_|___/_|_| |_|\___||___/___/   |_| \__, | .__/ \___|
+                                                                         |___/|_|
+ */
+    private void setBusinessType() {
+        mMap.clear();
+        mMap.addMarker(new MarkerOptions().position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).title("Current Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        HashMap<String, String> params = new HashMap<>();
+        if (editText_Main_Type.getText().toString().equals("")) {
+            editText_Main_Type.setError("Enter Something");
+        } else {
+            params.put("term", editText_Main_Type.getText().toString());
+            helper.getBusinesess(params, mLocation);
+        }
+
+    }
 
     /*
   ____                      _            __     ___
@@ -402,16 +392,17 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                  |___/
      */
     private void listSwitch() {
-        if (mapVisible){
+        if (mapVisible) {
             mapFragment.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
-            mapVisible=false;
-        }else {
+            mapVisible = false;
+        } else {
             recyclerView.setVisibility(View.GONE);
             mapFragment.setVisibility(View.VISIBLE);
             mapVisible = true;
         }
     }
+
     @Override
     public void onItemClick(Business currentBusiness) {
         Intent intent = new Intent(MainActivity.this, WeatherBusinessActivity.class);
