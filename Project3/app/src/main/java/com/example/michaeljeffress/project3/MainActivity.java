@@ -352,19 +352,23 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         protected void onPostExecute(Address address) {
             String addressName = "";
-            for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
-                addressName += " --- " + address.getAddressLine(i);
-            }
-            editText_Main_Location.setText(addressName);
+            if (address == null){
+                editText_Main_Location.setError("Invalid Address");
+            }else {
+                for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+                    addressName += " --- " + address.getAddressLine(i);
+                }
+                editText_Main_Location.setText(addressName);
 
-            mMap.clear();
-            mLocation.setLatitude(address.getLatitude());
-            mLocation.setLongitude(address.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).title("Current Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
-            HashMap<String, String> params = new HashMap<>();
-            helper.getBusinesess(params, mLocation);
+                mMap.clear();
+                mLocation.setLatitude(address.getLatitude());
+                mLocation.setLongitude(address.getLongitude());
+                mMap.addMarker(new MarkerOptions().position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).title("Current Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())));
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+                HashMap<String, String> params = new HashMap<>();
+                helper.getBusinesess(params, mLocation);
+            }
 
         }
     }
@@ -390,7 +394,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
     /*
-
+  ____                      _            __     ___
+ |  _ \ ___  ___ _   _  ___| | ___ _ __  \ \   / (_) _____      __
+ | |_) / _ \/ __| | | |/ __| |/ _ \ '__|  \ \ / /| |/ _ \ \ /\ / /
+ |  _ <  __/ (__| |_| | (__| |  __/ |      \ V / | |  __/\ V  V /
+ |_| \_\___|\___|\__, |\___|_|\___|_|       \_/  |_|\___| \_/\_/
+                 |___/
      */
     private void listSwitch() {
         if (mapVisible){
