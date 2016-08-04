@@ -35,22 +35,22 @@
         android:hint="@string/location" />
 
     <Button
-        android:id="@+id/locationButton"
+        android:id="@+id/setTypeButton"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/editText_Main_Location"
         android:layout_toEndOf="@+id/editText_Main_Type"
-        android:text="New Button" />
+        android:text="Set Bus... Type" />
 
     <Button
-        android:id="@+id/typeButton"
+        android:id="@+id/setLocationButton"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/editText_Main_Location"
         android:layout_toEndOf="@+id/editText_Main_Location"
-        android:text="New Button" />
+        android:text="Set Location" />
 
     <TextView
         android:id="@+id/textView_BlueBar"
