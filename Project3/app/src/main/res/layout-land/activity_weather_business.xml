@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.michaeljeffress.project3.WeatherBusinessActivity">
+
+    <TextView
+        android:id="@+id/business_name_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text ="Business Name"
+        android:fontFamily="monospace"
+        android:textSize="30dp" />
+
+    <ImageView
+        android:id="@+id/business_imageView"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:src="@drawable/weather"
+        android:visibility="visible"
+        android:layout_above="@+id/mobile_textview"
+        android:layout_alignParentStart="true" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_below="@id/business_imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/degrees_textView"
+        android:text ="70 degrees"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="monospace"
+        android:textSize="23dp"
+        android:layout_below="@+id/business_name_textview"
+        android:layout_toEndOf="@+id/business_name_textview" />
+
+    <TextView
+        android:id="@+id/sunrise_textView"
+        android:text="Sunrise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="9dp"
+        android:fontFamily="monospace"
+        android:textSize="11dp"
+        android:layout_below="@+id/degrees_textView"
+        android:layout_alignEnd="@+id/degrees_textView" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:id="@+id/sunrise_image"
+        android:src="@mipmap/sunrise"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/sunrise_textView"
+        android:layout_toStartOf="@+id/sunrise_textView" />
+
+    <TextView
+        android:id="@+id/sunset_textView"
+        android:text ="Sunset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="9dp"
+        android:fontFamily="monospace"
+        android:textSize="11dp"
+        android:layout_below="@+id/sunrise_image"
+        android:layout_alignEnd="@+id/sunrise_textView" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:id="@+id/sunset_image"
+        android:src="@mipmap/sunset"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/sunset_textView"
+        android:layout_toStartOf="@+id/sunset_textView" />
+
+    <TextView
+        android:id="@+id/ratings_textview"
+        android:paddingTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:fontFamily="monospace"
+        android:text ="Ratings"
+        android:layout_below="@+id/sunset_image"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/isClosed_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:fontFamily="monospace"
+        android:text ="Currently open"
+        android:layout_below="@+id/ratings_textview"
+        android:layout_alignEnd="@+id/ratings_textview" />
+
+    <TextView
+        android:id="@+id/location_address_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:fontFamily="monospace"
+        android:text ="Street Add"
+        android:layout_below="@+id/isClosed_textview"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/location_city_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:fontFamily="monospace"
+        android:text ="City, State"
+        android:layout_below="@+id/location_address_textview"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/location_zipcode_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:fontFamily="monospace"
+        android:text ="Zip code"
+        android:layout_below="@+id/location_city_textview"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:id="@+id/mobile_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:autoLink="phone"
+        android:fontFamily="monospace"
+        android:text ="Phone"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/sunset_image" />
+
+</RelativeLayout>
