@@ -51,6 +51,7 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
 
     Intent intent;
     Business currentBusiness;
+    String imageUrl;
 
 
     @Override
@@ -58,19 +59,7 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather_business);
 
-        currentWeatherTextview = (TextView) findViewById(R.id.degrees_textView);
-        sunriseTextview = (TextView) findViewById(R.id.sunrise_textView);
-        sunsetTextview = (TextView) findViewById(R.id.sunset_textView);
-        ratingsTextview = (TextView) findViewById(R.id.ratings_textview);
-        mobileTextview = (TextView) findViewById(R.id.mobile_textview);
-        isClosedTextview = (TextView) findViewById(R.id.isClosed_textview);
-        businessNameTextView = (TextView) findViewById(R.id.business_name_textview);
-        locationTextview = (TextView) findViewById(R.id.location_address_textview);
-        yelpImageView = (ImageView) findViewById(R.id.business_imageView);
-        cityTextView = (TextView) findViewById(R.id.location_city_textview);
-        zipCodeTextView = (TextView) findViewById(R.id.location_zipcode_textview);
-        ratingBar = (RatingBar) findViewById(R.id.rating_bar);
-
+        findViewById();
         setCurrentBusiness();
         getCurrentWeather();
         setUpJobService();
@@ -174,6 +163,21 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         currentBusiness = (Business) intent.getSerializableExtra("business");
     }
 
+    private void findViewById() {
+
+        currentWeatherTextview = (TextView) findViewById(R.id.degrees_textView);
+        sunriseTextview = (TextView) findViewById(R.id.sunrise_textView);
+        sunsetTextview = (TextView) findViewById(R.id.sunset_textView);
+        ratingsTextview = (TextView) findViewById(R.id.ratings_textview);
+        mobileTextview = (TextView) findViewById(R.id.mobile_textview);
+        isClosedTextview = (TextView) findViewById(R.id.isClosed_textview);
+        businessNameTextView = (TextView) findViewById(R.id.business_name_textview);
+        locationTextview = (TextView) findViewById(R.id.location_address_textview);
+        yelpImageView = (ImageView) findViewById(R.id.business_imageView);
+        cityTextView = (TextView) findViewById(R.id.location_city_textview);
+        zipCodeTextView = (TextView) findViewById(R.id.location_zipcode_textview);
+        ratingBar = (RatingBar) findViewById(R.id.rating_bar);
+    }
 
     @Override
     public void onBuisnessesRecieved(ArrayList<Business> buisnesses) {
@@ -181,6 +185,7 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
     }
 
     private void setTextViews() {
+
         boolean isClosedOrOpen = currentBusiness.isClosed();
 
         if (isClosedOrOpen == true) {
@@ -198,10 +203,9 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         DrawableCompat.setTint(progress, Color.WHITE);
         ratingBar.setRating(ratingFloat);
 
-        String rating = currentBusiness.rating().toString();
         String mobile = currentBusiness.displayPhone().toString();
         String businessName = currentBusiness.name();
-        String imageUrl = currentBusiness.imageUrl().toString();
+        imageUrl = currentBusiness.imageUrl().toString();
         String loc = currentBusiness.location().address().toString();
         String location = loc.substring(1, loc.length() - 1);
 
@@ -209,14 +213,17 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         String stateString = currentBusiness.location().stateCode().toString();
         String zipCodeString = currentBusiness.location().postalCode().toString();
 
-        //ratingsTextview.setText("Rating: " + rating + " Stars");
         mobileTextview.setText(getString(R.string.mobile_textview_phone) + mobile);
         businessNameTextView.setText(businessName);
         locationTextview.setText(location);
         cityTextView.setText(cityString + "," + stateString);
         zipCodeTextView.setText(zipCodeString);
 
+        setUpPicasso();
 
+    }
+
+    public void setUpPicasso() {
         Picasso picasso = new Picasso.Builder(this).listener(new Picasso.Listener() {
 
             @Override
@@ -235,7 +242,7 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
                 Log.d(TAG, "No Success");
 
             }
-        });
 
+        });
     }
 }
