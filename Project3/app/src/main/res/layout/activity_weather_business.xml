@@ -8,7 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/colorWhite"
-    tools:context="com.example.michaeljeffress.project3.WeatherBusinessActivity">
+    tools:context=".activities.WeatherBusinessActivity">
 
     <TextView
         android:id="@+id/business_name_textview"

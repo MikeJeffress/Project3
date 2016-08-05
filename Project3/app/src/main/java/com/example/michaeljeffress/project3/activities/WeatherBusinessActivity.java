@@ -1,4 +1,4 @@
-package com.example.michaeljeffress.project3;
+package com.example.michaeljeffress.project3.activities;
 
 import android.annotation.TargetApi;
 import android.app.job.JobInfo;
@@ -21,7 +21,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.michaeljeffress.project3.jobservices.WeatherJobService;
+import com.example.michaeljeffress.project3.R;
+import com.example.michaeljeffress.project3.helpers.YelpAPIHelper;
+import com.example.michaeljeffress.project3.interfaces.OpenWeatherInterface;
+import com.example.michaeljeffress.project3.services.WeatherJobService;
 import com.example.michaeljeffress.project3.models.ModelRoot;
 import com.squareup.picasso.Picasso;
 import com.yelp.clientlib.entities.Business;

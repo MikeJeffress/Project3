@@ -1,4 +1,4 @@
-package com.example.michaeljeffress.project3.jobservices;
+package com.example.michaeljeffress.project3.services;
 
 import android.annotation.TargetApi;
 import android.app.Notification;
@@ -15,8 +15,8 @@ import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.example.michaeljeffress.project3.MainActivity;
-import com.example.michaeljeffress.project3.OpenWeatherInterface;
+import com.example.michaeljeffress.project3.activities.MainActivity;
+import com.example.michaeljeffress.project3.interfaces.OpenWeatherInterface;
 import com.example.michaeljeffress.project3.R;
 import com.example.michaeljeffress.project3.models.ModelRoot;
 
@@ -39,7 +39,6 @@ public class WeatherJobService extends JobService {
     String appid = "1e2b1107da588b3b5fa83014c6555e62";
     String temp;
 
-
     protected void getCurrentWeather(PersistableBundle bundle) {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
@@ -60,7 +59,6 @@ public class WeatherJobService extends JobService {
                 @Override
                 public void onResponse(Call<ModelRoot> call, Response<ModelRoot> response) {
                     try {
-
 
                         Log.d("on response", "onResponse: " + response.body().getMain().getTemp());
 
@@ -90,7 +88,6 @@ public class WeatherJobService extends JobService {
 
     public void setNotification() {
 
-
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
@@ -111,8 +108,6 @@ public class WeatherJobService extends JobService {
     @Override
     public boolean onStartJob(JobParameters jobParameters) {
         PersistableBundle bundle = jobParameters.getExtras();
-
-
         getCurrentWeather(bundle);
         return false;
     }

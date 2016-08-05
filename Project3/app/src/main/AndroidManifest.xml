@@ -25,7 +25,7 @@
 
 
         <activity
-            android:name=".SplashActivity"
+            android:name=".activities.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,15 +34,15 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity" />
+        <activity android:name=".activities.MainActivity" />
 
-        <activity android:name=".WeatherBusinessActivity"></activity>
+        <activity android:name=".activities.WeatherBusinessActivity"></activity>
 
         <service
-            android:name=".jobservices.WeatherJobService"
+            android:name=".services.WeatherJobService"
             android:permission="android.permission.BIND_JOB_SERVICE"></service>
         <service
-            android:name=".GeocodeAddressIntentService"
+            android:name=".services.GeocodeAddressIntentService"
             android:exported="false" />
 
     </application>

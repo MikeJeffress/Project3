@@ -1,4 +1,4 @@
-package com.example.michaeljeffress.project3;
+package com.example.michaeljeffress.project3.adapters;
 
 import android.content.Context;
 import android.net.Uri;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.michaeljeffress.project3.R;
 import com.squareup.picasso.Picasso;
 import com.yelp.clientlib.entities.Business;
 
@@ -94,8 +95,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             }
         });
-
-
     }
 
     @Override

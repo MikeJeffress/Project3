@@ -1,4 +1,4 @@
-package com.example.michaeljeffress.project3;
+package com.example.michaeljeffress.project3.activities;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -18,6 +18,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.michaeljeffress.project3.R;
+import com.example.michaeljeffress.project3.adapters.RecyclerViewAdapter;
+import com.example.michaeljeffress.project3.helpers.YelpAPIHelper;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;

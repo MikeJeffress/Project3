@@ -1,4 +1,4 @@
-package com.example.michaeljeffress.project3;
+package com.example.michaeljeffress.project3.services;
 
 /**
  * Created by michaeljeffress on 8/3/16.
@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.text.TextUtils;
 import android.util.Log;
+
+import com.example.michaeljeffress.project3.constants.Constants;
 
 import java.io.IOException;
 import java.util.ArrayList;

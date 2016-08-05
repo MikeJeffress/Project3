@@ -1,10 +1,11 @@
-package com.example.michaeljeffress.project3;
+package com.example.michaeljeffress.project3.helpers;
 
 import android.content.Context;
 import android.location.Location;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.michaeljeffress.project3.R;
 import com.yelp.clientlib.connection.YelpAPI;
 import com.yelp.clientlib.connection.YelpAPIFactory;
 import com.yelp.clientlib.entities.Business;

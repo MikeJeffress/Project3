@@ -1,4 +1,4 @@
-package com.example.michaeljeffress.project3;
+package com.example.michaeljeffress.project3.constants;
 
 /**
  * Created by michaeljeffress on 8/3/16.
