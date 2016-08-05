@@ -113,7 +113,7 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
                         double fahrenheit = 1.8 * (currentTemp - 273) + 32;
                         int fahrenheitInt = ((int) fahrenheit);
                         temp = String.valueOf(fahrenheitInt);
-                        currentWeatherTextview.setText("Current Temperature " + temp + (char) 0x00B0);
+                        currentWeatherTextview.setText(getString(R.string.current_temp_text) + temp + (char) 0x00B0);
 
 
                         int sunriseTime = response.body().getSys().getSunrise();
@@ -121,7 +121,7 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
                         long sunriseTimestamp = sunriseLong * 1000L;
                         Date date = new Date(sunriseTimestamp);
                         String sunriseString = String.valueOf(date);
-                        sunriseTextview.setText("Sunrise:" + sunriseString);
+                        sunriseTextview.setText(getString(R.string.sunrise_string) + sunriseString);
 
 
                         int sunsetTime = response.body().getSys().getSunset();
@@ -129,7 +129,7 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
                         long sunsetTimestamp = sunsetLong * 1000L;
                         Date sunsetDate = new Date(sunsetTimestamp);
                         String sunsetString = String.valueOf(sunsetDate);
-                        sunsetTextview.setText("Sunset: " + sunsetString);
+                        sunsetTextview.setText(getString(R.string.sunset_string) + sunsetString);
 
 
                     } catch (Exception e) {
@@ -143,7 +143,7 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
                 }
             });
         } else {
-            Toast.makeText(WeatherBusinessActivity.this, "Not connected to WIFI", Toast.LENGTH_LONG).show();
+            Toast.makeText(WeatherBusinessActivity.this, R.string.toast_not_connected_wifi, Toast.LENGTH_LONG).show();
 
         }
 
@@ -184,11 +184,11 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         boolean isClosedOrOpen = currentBusiness.isClosed();
 
         if (isClosedOrOpen == true) {
-            String closed = "Currently Closed";
+            String closed = getString(R.string.current_business_closed);
             isClosedTextview.setText(closed);
 
         } else if (isClosedOrOpen == false) {
-            String open = "Currently Open";
+            String open = getString(R.string.current_business_open);
             isClosedTextview.setText(open);
         }
 
@@ -210,7 +210,7 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         String zipCodeString = currentBusiness.location().postalCode().toString();
 
         //ratingsTextview.setText("Rating: " + rating + " Stars");
-        mobileTextview.setText("Phone number: " + mobile);
+        mobileTextview.setText(getString(R.string.mobile_textview_phone) + mobile);
         businessNameTextView.setText(businessName);
         locationTextview.setText(location);
         cityTextView.setText(cityString + "," + stateString);

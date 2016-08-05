@@ -329,11 +329,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 try {
                     addresses = geocoder.getFromLocationName(name, 1);
                 } catch (IOException e) {
-                    errorMessage = "Service not available";
+                    errorMessage = getString(R.string.service_not_available_string);
                     Log.e(TAG, errorMessage, e);
                 }
             } else {
-                errorMessage = "Unknown Type";
+                errorMessage = getString(R.string.unknown_type_string);
                 Log.e(TAG, errorMessage);
             }
 
@@ -347,7 +347,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         protected void onPostExecute(Address address) {
             String addressName = "";
             if (address == null) {
-                editText_Main_Location.setError("Invalid Address");
+                editText_Main_Location.setError(getString(R.string.address_error));
             } else {
                 for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
                     addressName += " --- " + address.getAddressLine(i);
@@ -377,10 +377,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
  */
     private void setBusinessType() {
         mMap.clear();
-        mMap.addMarker(new MarkerOptions().position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).title("Current Location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(mLocation.getLatitude(), mLocation.getLongitude())).title(getString(R.string.current_location_string)).icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
         HashMap<String, String> params = new HashMap<>();
         if (editText_Main_Type.getText().toString().equals("")) {
-            editText_Main_Type.setError("Enter Something");
+            editText_Main_Type.setError(getString(R.string.enter_something_string));
         } else {
             params.put("term", editText_Main_Type.getText().toString());
             helper.getBusinesess(params, mLocation);

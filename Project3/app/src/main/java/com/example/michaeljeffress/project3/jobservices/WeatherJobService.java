@@ -19,7 +19,6 @@ import com.example.michaeljeffress.project3.MainActivity;
 import com.example.michaeljeffress.project3.OpenWeatherInterface;
 import com.example.michaeljeffress.project3.R;
 import com.example.michaeljeffress.project3.models.ModelRoot;
-import com.yelp.clientlib.entities.Business;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -39,7 +38,7 @@ public class WeatherJobService extends JobService {
     String baseURL = "http://api.openweathermap.org/";
     String appid = "1e2b1107da588b3b5fa83014c6555e62";
     String temp;
-    Business currentBusiness;
+
 
     protected void getCurrentWeather(PersistableBundle bundle) {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -83,7 +82,7 @@ public class WeatherJobService extends JobService {
                 }
             });
         } else {
-            Toast.makeText(WeatherJobService.this, "Not connected to WIFI", Toast.LENGTH_LONG).show();
+            Toast.makeText(WeatherJobService.this, R.string.toast_not_connected, Toast.LENGTH_LONG).show();
 
         }
 
@@ -96,8 +95,8 @@ public class WeatherJobService extends JobService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
         mBuilder.setSmallIcon(R.mipmap.barometercolor);
-        mBuilder.setContentTitle("New Weather Notification");
-        mBuilder.setContentText(temp + " degrees");
+        mBuilder.setContentTitle(getString(R.string.content_title_notification_weather));
+        mBuilder.setContentText(temp + getString(R.string.content_text_degrees));
         mBuilder.setContentIntent(pendingIntent);
         mBuilder.setAutoCancel(true);
         mBuilder.setPriority(Notification.PRIORITY_DEFAULT);

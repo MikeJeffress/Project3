@@ -12,5 +12,21 @@
     <string name="title_activity_open_weather">OpenWeatherActivity</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="switch_to_list">Switch To List</string>
+    <string name="address_error">Invalid Address</string>
+    <string name="toast_not_connected">Not connected to WIFI</string>
+    <string name="content_text_degrees">" degrees"</string>
+    <string name="content_title_notification_weather">New Weather Notification</string>
+    <string name="mobile_textview_phone">"Phone number: "</string>
+    <string name="current_business_closed">Currently Closed</string>
+    <string name="current_business_open">Currently Open</string>
+    <string name="toast_not_connected_wifi">Not connected to WIFI</string>
+    <string name="sunrise_string">Sunrise:</string>
+    <string name="sunset_string">"Sunset: "</string>
+    <string name="current_temp_text">"Current Temperature "</string>
+    <string name="failed_to_connect_string">Failed To Connect</string>
+    <string name="unknown_type_string">Unknown Type</string>
+    <string name="service_not_available_string">Service not available</string>
+    <string name="enter_something_string">Enter Something</string>
+    <string name="current_location_string">Current Location</string>
 
 </resources>

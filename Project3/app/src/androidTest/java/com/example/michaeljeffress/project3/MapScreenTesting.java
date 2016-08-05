@@ -21,13 +21,7 @@ public class MapScreenTesting {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityRule = new ActivityTestRule<MainActivity>(MainActivity.class);
-
-//    @Test
-//    public void testMarker() throws Exception {
-////        onView(withId(R.id.))
-////                .perform(click());
-//    }
-
+    
     @Test
     public void testSetLocationButton() throws Exception {
         onView(withId(R.id.setLocationButton))

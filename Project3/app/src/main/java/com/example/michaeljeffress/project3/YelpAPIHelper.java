@@ -1,16 +1,9 @@
 package com.example.michaeljeffress.project3;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
-
 
 import com.yelp.clientlib.connection.YelpAPI;
 import com.yelp.clientlib.connection.YelpAPIFactory;
@@ -76,7 +69,7 @@ public class YelpAPIHelper {
 
             @Override
             public void onFailure(Call<SearchResponse> call, Throwable t) {
-                Toast.makeText(context, "Failed To Connect", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.failed_to_connect_string, Toast.LENGTH_SHORT).show();
             }
         });
     }
