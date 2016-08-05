@@ -39,19 +39,20 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
 
     private String baseURL = "http://api.openweathermap.org/";
     private String appid = "1e2b1107da588b3b5fa83014c6555e62";
-    private TextView currentWeatherTextview, sunriseTextview, sunsetTextview, ratingsTextview,
+    private TextView currentWeatherTextview, sunriseTextview, sunsetTextview,
             mobileTextview, isClosedTextview, businessNameTextView, locationTextview, cityTextView, zipCodeTextView;
     private ImageView yelpImageView;
     private String temp;
     private RatingBar ratingBar;
     private static final String TAG = WeatherBusinessActivity.class.getSimpleName();
-
     public static final int JOB_ID = 2;
-
 
     Intent intent;
     Business currentBusiness;
     String imageUrl;
+    int sunriseTime;
+    int sunsetTime;
+    double currentTemp;
 
 
     @Override
@@ -59,17 +60,18 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather_business);
 
+        setUpConnectivity();
         findViewById();
         setCurrentBusiness();
         getCurrentWeather();
         setUpJobService();
         setTextViews();
+    }
 
-
+    private void setUpConnectivity() {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-
 
         }
     }
@@ -95,31 +97,14 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
                 public void onResponse(Call<ModelRoot> call, Response<ModelRoot> response) {
                     try {
 
-
                         Log.d("on response", "onResponse: " + response.body().getMain().getTemp());
 
-                        double currentTemp = response.body().getMain().getTemp().doubleValue();
-                        double fahrenheit = 1.8 * (currentTemp - 273) + 32;
-                        int fahrenheitInt = ((int) fahrenheit);
-                        temp = String.valueOf(fahrenheitInt);
-                        currentWeatherTextview.setText(getString(R.string.current_temp_text) + temp + (char) 0x00B0);
+                        currentTemp = response.body().getMain().getTemp().doubleValue();
+                        getFahrenheit();
+                        sunriseTime = response.body().getSys().getSunrise();
+                        sunsetTime = response.body().getSys().getSunset();
 
-
-                        int sunriseTime = response.body().getSys().getSunrise();
-                        long sunriseLong = ((long) sunriseTime);
-                        long sunriseTimestamp = sunriseLong * 1000L;
-                        Date date = new Date(sunriseTimestamp);
-                        String sunriseString = String.valueOf(date);
-                        sunriseTextview.setText(getString(R.string.sunrise_string) + sunriseString);
-
-
-                        int sunsetTime = response.body().getSys().getSunset();
-                        long sunsetLong = ((long) sunsetTime);
-                        long sunsetTimestamp = sunsetLong * 1000L;
-                        Date sunsetDate = new Date(sunsetTimestamp);
-                        String sunsetString = String.valueOf(sunsetDate);
-                        sunsetTextview.setText(getString(R.string.sunset_string) + sunsetString);
-
+                        setUpSunriseSunset();
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -136,6 +121,28 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
 
         }
 
+    }
+
+    private void getFahrenheit() {
+        double fahrenheit = 1.8 * (currentTemp - 273) + 32;
+        int fahrenheitInt = ((int) fahrenheit);
+        temp = String.valueOf(fahrenheitInt);
+        currentWeatherTextview.setText(getString(R.string.current_temp_text) + temp + (char) 0x00B0);
+    }
+
+    private void setUpSunriseSunset() {
+
+        long sunriseLong = ((long) sunriseTime);
+        long sunriseTimestamp = sunriseLong * 1000L;
+        Date date = new Date(sunriseTimestamp);
+        String sunriseString = String.valueOf(date);
+        sunriseTextview.setText(getString(R.string.sunrise_string) + sunriseString);
+
+        long sunsetLong = ((long) sunsetTime);
+        long sunsetTimestamp = sunsetLong * 1000L;
+        Date sunsetDate = new Date(sunsetTimestamp);
+        String sunsetString = String.valueOf(sunsetDate);
+        sunsetTextview.setText(getString(R.string.sunset_string) + sunsetString);
     }
 
 
@@ -168,7 +175,6 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         currentWeatherTextview = (TextView) findViewById(R.id.degrees_textView);
         sunriseTextview = (TextView) findViewById(R.id.sunrise_textView);
         sunsetTextview = (TextView) findViewById(R.id.sunset_textView);
-        ratingsTextview = (TextView) findViewById(R.id.ratings_textview);
         mobileTextview = (TextView) findViewById(R.id.mobile_textview);
         isClosedTextview = (TextView) findViewById(R.id.isClosed_textview);
         businessNameTextView = (TextView) findViewById(R.id.business_name_textview);
@@ -181,7 +187,6 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
 
     @Override
     public void onBuisnessesRecieved(ArrayList<Business> buisnesses) {
-
     }
 
     private void setTextViews() {
@@ -208,7 +213,6 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         imageUrl = currentBusiness.imageUrl().toString();
         String loc = currentBusiness.location().address().toString();
         String location = loc.substring(1, loc.length() - 1);
-
         String cityString = currentBusiness.location().city().toString();
         String stateString = currentBusiness.location().stateCode().toString();
         String zipCodeString = currentBusiness.location().postalCode().toString();

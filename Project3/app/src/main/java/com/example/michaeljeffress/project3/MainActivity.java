@@ -229,9 +229,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     protected void onStop() {
-        if(mGoogleApiClient.isConnected()){
-        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-        mGoogleApiClient.disconnect();
+        if (mGoogleApiClient.isConnected()) {
+            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+            mGoogleApiClient.disconnect();
         }
 
         super.onStop();
