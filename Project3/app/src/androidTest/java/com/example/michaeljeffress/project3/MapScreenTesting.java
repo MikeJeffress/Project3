@@ -51,5 +51,9 @@ public class MapScreenTesting {
         onView(withId(R.id.editText_Main_Location))
                 .perform(clearText(),typeText(""));
     }
-
+    @Test
+    public void testListSwitchButton() throws Exception {
+        onView(withId(R.id.recylerViewButton))
+                .perform(click());
+    }
 }
