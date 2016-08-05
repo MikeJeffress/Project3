@@ -95,6 +95,11 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
         <TextView
             android:id="@+id/ratings_textview"
             android:paddingTop="10dp"
@@ -104,12 +109,20 @@
             android:fontFamily="monospace"
             android:text ="Ratings"
              />
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:id="@+id/rating_bar"
+            android:background="@color/colorAccent"
+            android:scaleX="0.75"
+            android:scaleY="0.75"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
         <TextView
             android:id="@+id/isClosed_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="16dp"
             android:fontFamily="monospace"
             android:text ="Currently open"
             />
@@ -118,7 +131,7 @@
             android:id="@+id/location_address_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="16dp"
             android:fontFamily="monospace"
             android:text ="Street Add"
              />
@@ -127,7 +140,7 @@
             android:id="@+id/location_city_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="16dp"
             android:fontFamily="monospace"
             android:text ="City, State"
             />
@@ -137,7 +150,7 @@
             android:id="@+id/location_zipcode_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="16dp"
             android:fontFamily="monospace"
             android:text ="Zip code"
             />
@@ -146,7 +159,7 @@
             android:id="@+id/mobile_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="20dp"
+            android:textSize="16dp"
             android:autoLink="phone"
             android:fontFamily="monospace"
             android:text ="Phone"

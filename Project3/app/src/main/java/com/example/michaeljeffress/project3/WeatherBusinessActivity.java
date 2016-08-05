@@ -6,14 +6,18 @@ import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +43,7 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
             mobileTextview, isClosedTextview, businessNameTextView, locationTextview, cityTextView, zipCodeTextView;
     private ImageView yelpImageView;
     private String temp;
+    private RatingBar ratingBar;
     private static final String TAG = WeatherBusinessActivity.class.getSimpleName();
 
     public static final int JOB_ID = 2;
@@ -64,7 +69,7 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         yelpImageView = (ImageView) findViewById(R.id.business_imageView);
         cityTextView = (TextView) findViewById(R.id.location_city_textview);
         zipCodeTextView = (TextView) findViewById(R.id.location_zipcode_textview);
-
+        ratingBar = (RatingBar) findViewById(R.id.rating_bar);
 
         setCurrentBusiness();
         getCurrentWeather();
@@ -187,6 +192,12 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
             isClosedTextview.setText(open);
         }
 
+        double ratingDouble = (currentBusiness.rating());
+        float ratingFloat = (float) ratingDouble;
+        Drawable progress = ratingBar.getProgressDrawable();
+        DrawableCompat.setTint(progress, Color.WHITE);
+        ratingBar.setRating(ratingFloat);
+
         String rating = currentBusiness.rating().toString();
         String mobile = currentBusiness.displayPhone().toString();
         String businessName = currentBusiness.name();
@@ -198,7 +209,7 @@ public class WeatherBusinessActivity extends AppCompatActivity implements YelpAP
         String stateString = currentBusiness.location().stateCode().toString();
         String zipCodeString = currentBusiness.location().postalCode().toString();
 
-        ratingsTextview.setText("Rating: " + rating + " Stars");
+        //ratingsTextview.setText("Rating: " + rating + " Stars");
         mobileTextview.setText("Phone number: " + mobile);
         businessNameTextView.setText(businessName);
         locationTextview.setText(location);
