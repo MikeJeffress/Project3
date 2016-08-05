@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.PersistableBundle;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
@@ -39,10 +40,8 @@ public class WeatherJobService extends JobService {
     String appid = "1e2b1107da588b3b5fa83014c6555e62";
     String temp;
     Business currentBusiness;
-    Intent intent;
 
-
-    protected void getCurrentWeather() {
+    protected void getCurrentWeather(PersistableBundle bundle) {
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
@@ -52,8 +51,8 @@ public class WeatherJobService extends JobService {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
-            double businessLongitude = currentBusiness.location().coordinate().longitude();
-            double businessLatitude = currentBusiness.location().coordinate().latitude();
+            double businessLongitude = bundle.getDouble("longitude");
+            double businessLatitude = bundle.getDouble("latitude");
 
             OpenWeatherInterface openWeatherInterface = retrofit.create(OpenWeatherInterface.class);
             Call<ModelRoot> call = openWeatherInterface.getCurrentWeather(businessLatitude, businessLongitude, appid);
@@ -70,6 +69,8 @@ public class WeatherJobService extends JobService {
                         double fahrenheit = 1.8 * (currentTemp - 273) + 32;
                         int fahrenheitInt = ((int) fahrenheit);
                         temp = String.valueOf(fahrenheitInt);
+
+                        setNotification();
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -88,12 +89,8 @@ public class WeatherJobService extends JobService {
 
     }
 
+    public void setNotification() {
 
-
-    @Override
-    public boolean onStartJob(JobParameters jobParameters) {
-
-        //getCurrentWeather();
 
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, (int) System.currentTimeMillis(), intent, 0);
@@ -109,13 +106,17 @@ public class WeatherJobService extends JobService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
 
-        return false;
     }
 
-//    private void setCurrentBusiness() {
-//        intent = getIntent();
-//        currentBusiness = (Business) intent.getSerializableExtra("business");
-//    }
+
+    @Override
+    public boolean onStartJob(JobParameters jobParameters) {
+        PersistableBundle bundle = jobParameters.getExtras();
+
+
+        getCurrentWeather(bundle);
+        return false;
+    }
 
     @Override
     public boolean onStopJob(JobParameters jobParameters) {
